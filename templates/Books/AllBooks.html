@@ -57,20 +57,24 @@
     <script src="{% static 'Scripts/Sliderswiper.js'%}" defer></script>
     <script>
         var originalContent = document.getElementById('library-container').innerHTML;
+        
         function updatePage(books) {
             books = JSON.parse(books);
             
             var libraryContainer = document.getElementById('library-container');
+
+            const header = document.createElement("h2");
+            header.classList.add("section-header");
+            
             var section = document.createElement('section');
             section.className = 'category-section';
             libraryContainer.innerHTML = '';
+
             for (var book of books) {
-                console.log(book.fields);
                 if (book.fields) {
+                    
                     var bookDiv = document.createElement('div');
                     bookDiv.className = 'book-div Card';
-
-
                     
                     var bookImage = document.createElement('img');
                     bookImage.src = book.fields.cover;
@@ -106,22 +110,46 @@
                     bookDiv.appendChild(bookAvailability);
 
                     section.appendChild(bookDiv);
-
+                    libraryContainer.appendChild(header);
                     libraryContainer.appendChild(section);
                 }
             }
         }
 
         document.getElementById('search-input').addEventListener('input', function(e) {
-        var query = e.target.value;
-        if(query){
-        fetch('/Books/search?q=' + encodeURIComponent(query))
-            .then(response => response.json())
-            .then(data => updatePage(data));
-        } else {
-            document.getElementById('library-container').innerHTML = originalContent;
-        }
+            const query = e.target.value;
+            if(query){
+                fetch('/Books/search?query=' + encodeURIComponent(query))
+                    .then(response => response.json())
+                    .then(data => updatePage(data));
+            } else {
+                document.getElementById('library-container').innerHTML = originalContent;
+            }
         });
+
+        document.getElementById('available-only-checkbox').addEventListener('change', function(e) {
+            const onlyAvailable = e.target.checked;
+            if(onlyAvailable){
+                fetch('/Books/available_books?available=' + encodeURIComponent(onlyAvailable))
+                    .then(response => response.json())
+                    .then(data => updatePage(data));
+            } else {
+                document.getElementById('library-container').innerHTML = originalContent;
+            }
+        });
+        // function fetchData() {
+        //     const onlyAvailable = document.getElementById('available-only-checkbox').checked;
+        //     const searchQuery = document.getElementById('search-input').value.trim();
+        //     const url = `/Books/avail-search?available=${encodeURIComponent(onlyAvailable)}&q=${encodeURIComponent(searchQuery)}`;
+
+        //     fetch(url)
+        //         .then(response => response.json())
+        //         .then(data => updatePage(data))
+        //         .catch(error => console.error('Error fetching book data:', error));
+        //     }
+
+        // document.getElementById('search-input').addEventListener('input', fetchData);
+        // document.getElementById('available-only-checkbox').addEventListener('change', fetchData);
     </script>
 
 </body>

@@ -29,7 +29,7 @@ function hoverEffect() {
         imageDiv.addEventListener('mouseout', function() {
             var textDiv = imageDiv.querySelector('.hoverText');
             imageDiv.removeChild(textDiv);
-        })                                                                                                       ;
+        });
     });
 }
 
@@ -44,7 +44,6 @@ function GetStarTedBtn() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-
     GetStarTedBtn();
     initiateswipe();
     hoverEffect();

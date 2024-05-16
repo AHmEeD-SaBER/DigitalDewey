@@ -24,7 +24,6 @@ if (bookAvailability === "True") {
   ionicon.setAttribute("name", "close-circle-outline");
   ionicon.classList.add("unavailable");
   btn.textContent = "Request";
-
 }
 
 document.body.style.backgroundImage = "url('" + bookImageSrc + "')";
@@ -54,16 +53,6 @@ document.body.style.backgroundSize = "cover";
 //   }
 // }
 
-// function getIsAdmin() {
-//   const userDataJson = localStorage.getItem("RegisteredUsers");
-
-//   if (userDataJson) {
-//     const userData = JSON.parse(userDataJson);
-//     return userData.role;
-//   }
-//   return false;
-// }
-
 // function checkIsLoggedIn() {
 //     const userDataJson = sessionStorage.getItem('LoggedInUser');
     
@@ -74,17 +63,21 @@ document.body.style.backgroundSize = "cover";
 //     return false;
 // }
 
-// function hideOrShowButton() {
-//     let isAdmin = checkIsAdmin();
+function checkIsAdmin() {
+    
+}
+
+function hideOrShowButton() {
+    let isAdmin = checkIsAdmin();
   
-//     if (isAdmin == 'Admin') {
-//       document.getElementById("delButton").style.display = "flex";
-//       document.getElementById("editButton").style.display = "flex";
-//     } else {
-//       document.getElementById("delButton").style.display = "none";
-//       document.getElementById("editButton").style.display = "none";
-//     }
-//   }
+    if (isAdmin == true) {
+      document.getElementById("delButton").style.display = "flex";
+      document.getElementById("editButton").style.display = "flex";
+    } else {
+      document.getElementById("delButton").style.display = "none";
+      document.getElementById("editButton").style.display = "none";
+    }
+}
 
 // function addBook(
 //   name,
@@ -216,15 +209,15 @@ document.body.style.backgroundSize = "cover";
 //     }
 // });
 
-// function isBorrowedfunc() {
-//   if (isBorrowed) {
-//     document.getElementById("borrowButton").style.display = "none";
-//     document.getElementById("readButton").style.display = "inline-block";
-//   } else {
-//     document.getElementById("borrowButton").style.display = "inline-block";
-//     document.getElementById("readButton").style.display = "none";
-//   }
-// }
+function isBorrowedfunc() {
+  if (isBorrowed) {
+    document.getElementById("borrowButton").style.display = "none";
+    document.getElementById("readButton").style.display = "inline-block";
+  } else {
+    document.getElementById("borrowButton").style.display = "inline-block";
+    document.getElementById("readButton").style.display = "none";
+  }
+}
 
 // hideOrShowButton();
 // borrowBookFunc();

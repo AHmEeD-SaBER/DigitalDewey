@@ -12,8 +12,8 @@
 </head>
 
 <body>
-    <div id="side-bar_reuseable"></div>
-    <script src="../Assets/Assets-Scripts/LoadSide-Bar.js" defer></script>
+    <!-- <div id="side-bar_reuseable"></div>
+    <script src="../Assets/Assets-Scripts/LoadSide-Bar.js" defer></script> -->
 
     <br><br>
 
@@ -60,8 +60,7 @@
         <label class="lb"><input type="checkbox" id="chkboxnews">I want to receive news, announcements, and resources from the DigitalDewey <span>(Optional)</span></label>
         
         <input type="submit" value="Register" class="buttonreg">
-        <div class="alrlog">Already Have an Account?<a href="Login.html"> login!</a></div>
+        <div class="alrlog">Already Have an Account?<a href="{% url 'authentication:Login' %}"> login!</a></div>
     </form>
 </body>
-
 </html>

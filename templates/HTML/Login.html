@@ -12,8 +12,8 @@
 </head>
 
 <body>    
-    <div id="side-bar_reuseable"></div>
-    <script src="../Assets/Assets-Scripts/LoadSide-Bar.js" defer></script>
+    <!-- <div id="side-bar_reuseable"></div>
+    <script src="../Assets/Assets-Scripts/LoadSide-Bar.js" defer></script> -->
 
     <header> <h1>Log In to DigitalDewey Online Library</h1> </header>
     {% for message in messages %}
@@ -44,7 +44,7 @@
 
         <input type="submit" value="Login" class="buttonlog">
 
-        <div class="notreg">Don't Have an Account Yet? <a href="SignUp.html">SignUp Now!</a></div>
+        <div class="notreg">Don't Have an Account Yet? <a href="{% url 'authentication:Signup' %}">SignUp Now!</a></div>
     </form>
 </body>
 

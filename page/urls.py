@@ -9,6 +9,4 @@ urlpatterns = [
     path('categories', views.Categories, name='Categories'),
     path('All-Books', views.Allbooks, name='AllBooks'),
     path('Book_Details/<int:book_id>/', views.BD, name='Book_Details'),
-
-
 ]

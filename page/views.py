@@ -7,10 +7,6 @@ from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 import json
-# Create your views here.
-
-
-
 
 def index(request):
     books = Book.objects.all()
@@ -42,7 +38,7 @@ def Allbooks(request):
     categories = sorted(Book.objects.values_list('category', flat=True).distinct())
     return render(request, 'Books/AllBooks.html' , {'books':books, 'categories':categories})
 
-def BD(request, book_id):
+def BD(request, book_id, user_id):
     book = Book.objects.get(id=book_id)
-    return render(request, 'Books/Book-Details.html', {'book': book})
-
+    myuser =  User.objects.get(id=user_id)
+    return render(request, 'Books/Book-Details.html', {'book': book, 'user': myuser})
