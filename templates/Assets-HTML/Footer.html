@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="{% static 'Styles/Footer.css'%}">
 </head>
   <header class="header">
-    <a class="Logo" href="#"><ion-icon name="library"></ion-icon>DigitalDewey</a>
+    <a class="Logo" href="{% url 'page:index' %}"><ion-icon name="library"></ion-icon>DigitalDewey</a>
     <nav class="nav_bar">
         <ul>
             {% if user.is_authenticated %}
@@ -19,7 +19,6 @@
             {%else%}
             <li><a href="{% url 'authentication:Login'%}">Login</a></li>
             {%endif%}
-            <li><a href="{% url 'page:Categories'%}">Categories</a></li>
             <li><a href="{%url 'page:AllBooks'%}">All Books</a></li>
             <li><a href="{% url 'page:About'%}">About</a></li>
         </ul>

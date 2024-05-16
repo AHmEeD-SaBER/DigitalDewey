@@ -38,7 +38,7 @@ def Allbooks(request):
     categories = sorted(Book.objects.values_list('category', flat=True).distinct())
     return render(request, 'Books/AllBooks.html' , {'books':books, 'categories':categories})
 
-def BD(request, book_id, user_id):
+def BD(request, book_id):
     book = Book.objects.get(id=book_id)
-    myuser =  User.objects.get(id=user_id)
+    myuser =  request.user
     return render(request, 'Books/Book-Details.html', {'book': book, 'user': myuser})

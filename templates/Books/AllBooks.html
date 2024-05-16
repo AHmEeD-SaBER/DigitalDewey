@@ -116,40 +116,49 @@
             }
         }
 
-        document.getElementById('search-input').addEventListener('input', function(e) {
-            const query = e.target.value;
-            if(query){
-                fetch('/Books/search?query=' + encodeURIComponent(query))
-                    .then(response => response.json())
-                    .then(data => updatePage(data));
-            } else {
-                document.getElementById('library-container').innerHTML = originalContent;
-            }
-        });
-
-        document.getElementById('available-only-checkbox').addEventListener('change', function(e) {
-            const onlyAvailable = e.target.checked;
-            if(onlyAvailable){
-                fetch('/Books/available_books?available=' + encodeURIComponent(onlyAvailable))
-                    .then(response => response.json())
-                    .then(data => updatePage(data));
-            } else {
-                document.getElementById('library-container').innerHTML = originalContent;
-            }
-        });
-        // function fetchData() {
-        //     const onlyAvailable = document.getElementById('available-only-checkbox').checked;
-        //     const searchQuery = document.getElementById('search-input').value.trim();
-        //     const url = `/Books/avail-search?available=${encodeURIComponent(onlyAvailable)}&q=${encodeURIComponent(searchQuery)}`;
-
-        //     fetch(url)
-        //         .then(response => response.json())
-        //         .then(data => updatePage(data))
-        //         .catch(error => console.error('Error fetching book data:', error));
+        // document.getElementById('search-input').addEventListener('input', function(e) {
+        //     const query = e.target.value;
+        //     if(query){
+        //         fetch('/Books/search?query=' + encodeURIComponent(query))
+        //             .then(response => response.json())
+        //             .then(data => updatePage(data));
+        //     } else {
+        //         document.getElementById('library-container').innerHTML = originalContent;
         //     }
+        // });
 
-        // document.getElementById('search-input').addEventListener('input', fetchData);
-        // document.getElementById('available-only-checkbox').addEventListener('change', fetchData);
+        // document.getElementById('available-only-checkbox').addEventListener('change', function(e) {
+        //     const onlyAvailable = e.target.checked;
+        //     if(onlyAvailable){
+        //         fetch('/Books/available_books?available=' + encodeURIComponent(onlyAvailable))
+        //             .then(response => response.json())
+        //             .then(data => updatePage(data));
+        //     } else {
+        //         document.getElementById('library-container').innerHTML = originalContent;
+        //     }
+        // });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('search-input');
+            const availableCheckbox = document.getElementById('available-only-checkbox');
+
+            function fetchBooks() {
+                const query = searchInput.value.trim();
+                const available = availableCheckbox.checked;
+                const url = `/Books/avail-search?query=${encodeURIComponent(query)}&available=${available}`;
+
+                fetch(url)
+                    .then(response => response.json())
+                    .then(data => { 
+                        console.log(data);
+                        updatePage(data);
+                    })
+                    .catch(error => console.error('Error fetching books:', error));
+            }
+
+            searchInput.addEventListener('input', fetchBooks);
+            availableCheckbox.addEventListener('change', fetchBooks);
+        });
     </script>
 
 </body>
