@@ -22,5 +22,4 @@ document.body.addEventListener("click", function (event) {
     sessionStorage.setItem("section", section);
     window.location.href = url;
   }
-  console.log('hello');
 });
