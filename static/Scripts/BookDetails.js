@@ -3,7 +3,7 @@
 //   let books = loadFromLocalStorage(localStorageName);
 
 //   const index = books.findIndex((book) => book.name === bookName);
-//   if (index !== -1) {
+//   if (index !== 1) {
 //     books.splice(index, 1);
 //     saveToLocalStorage(books, localStorageName);
 //     alert(`Book deleted: ${bookName}`);
@@ -11,17 +11,6 @@
 //   } else {
 //     alert("Book not found");
 //   }
-// }
-
-// function borrowBookFunc() {
-//   // borrowing system
-//   if (bookAvailability === "Available") {
-//     document.getElementById("borrowButton").textContent = "Borrow";
-//   } else {
-//     document.getElementById("borrowButton").textContent = "Request";
-//   }
-
-//   document.getElementById("readButton").textContent = "Read Now!";
 // }
 
 // function rmvDupesInLocalStorage(localStorageName) {
@@ -40,15 +29,6 @@
 //   saveToLocalStorage(uniqueBooks, localStorageName);
 // }
 
-// function isBookBorrowed(bookName) {
-//   let borrowedBooks = loadFromLocalStorage("BorrowedBooks");
-//   return borrowedBooks.some((book) => book.name === bookName);
-// }
-
-// let isBorrowed = false;
-
-// hideOrShowButton();
-// borrowBookFunc();
 
 // function saveBookDetails() {
 //   const form = document.getElementById("editForm");
@@ -77,20 +57,4 @@
 // }
 
 document.addEventListener("DOMContentLoaded", function () {
-//   rmvDupesInLocalStorage("LastSeenBooks");
-//   const bookIsBorrowed = isBookBorrowed(bookName);
-//   if (bookIsBorrowed) {
-//     document.getElementById("borrowButton").style.display = "none";
-//     document.getElementById("readButton").style.display = "inline-block";
-//   } else {
-//     document.getElementById("borrowButton").style.display = "inline-block";
-//     document.getElementById("readButton").style.display = "none";
-//   }
-//   const delButton = document.getElementById("delButton");
-//   if (delButton) {
-//     delButton.addEventListener("click", () => {
-//       const bookName = sessionStorage.getItem("name");
-//       deleteBookFromLibrary(bookName);
-//     });
-//   }
 });
