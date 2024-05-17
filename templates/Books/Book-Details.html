@@ -1,48 +1,42 @@
-{% extends 'Assets-HTML/Footer.html'%}
-{% block content%}
+{% extends 'Assets-HTML/Footer.html' %}
+{% block content %}
 <!DOCTYPE html>
 <html>
-<head>
-    {% load static %}
-    <title>Book-Details</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <link rel="stylesheet" href="{% static 'Styles/Bookdetails.css'%}">
-
-</head>
-
-<body>
-
-    <!-- <div id="side-bar_reuseable"></div>
-    <script src="../Assets/Assets-Scripts/LoadSide-Bar.js" defer></script> -->
-
-    <div class="wrap">
-        <div class="BookCover">
-            <img src="" id="image">
-            <button class="borrowButton" id="borrowButton">Borrow</button>
-            <!-- <button class="readButton" id="readButton"></button> -->
+    <head>
+        {% load static %}
+        <title>Book-Details</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+        <link rel="stylesheet" href="{% static 'Styles/Bookdetails.css'%}">
+        <script src="{% static 'Scripts/BookDetails.js'%}" defer></script> 
+        <script src="{% static 'Scripts/ShowBookDetails.js'%}" defer></script>
+    </head>
+    <body>
+        <div class="wrap">
+            <div class="BookCover">
+                <img src="" id="image">
+                <button class="borrowButton" id="borrowButton">Borrow</button>
+                <!-- <button class="readButton" id="readButton"></button> -->
+            </div>
+            <div class="text-box" id="text-container">
+                <h2 id="name" style="display: inline;"></h2>
+                <h3 id="category" style="display: inline;"></h3>
+                <h4 id="author"></h4>
+                <p id="description"></p>
+                <br><br>
+                <ion-icon id="ionicon" class="CheckIcon"></ion-icon>
+                <span id="availability"></span>
+                <h3 id="price"></h3>
+            </div>
+            <div class="buttons">
+                <button class="btn1" id="editButton" type="button">Edit Book</button>
+                <button class="btn1" id="delButton" type="button">Delete Book</button>
+                <button class="btn1" id="saveButton" type="button">Save</button>
+                <button class="btn1" id="cancelButton" type="button">Cancel</button>
+            </div>
         </div>
-        <div class="text-box" id="text-container">
-            <h2 id="name" style="display: inline;"></h2>
-            <h3 id="category" style="display: inline;"></h3>
-            <h4 id="author"></h4>
-            <p id="description"></p>
-            <br><br>
-            <ion-icon id="ionicon" class="CheckIcon"></ion-icon>
-            <span id="availability"></span>
-            <h3 id="price"></h3>
-        </div>
-        <div class="buttons">
-            <button class="btn1" id="editButton" type="button">Edit Book</button>
-            <button class="btn1" id="delButton" type="button">Delete Book</button>
-            <button class="btn1" id="saveButton" type="button">Save</button>
-            <button class="btn1" id="cancelButton" type="button">Cancel</button>
-        </div>
-    </div>
 
-    <script src="{% static 'Scripts/BookDetails.js'%}" defer></script> 
-    <script src="{% static 'Scripts/ShowBookDetails.js'%}" defer></script>
-</body>
+    </body>
 </html>
 {% endblock %}

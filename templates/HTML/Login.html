@@ -1,51 +1,48 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        {% load static %}
+        <title>Login</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+        <link rel="stylesheet" href="{% static 'Styles/Login.css'%}">
+        <!-- <script src="{% static 'Scripts/Login.js'%}" defer></script> -->
+    </head>
+    <body>    
+        <!-- <div id="side-bar_reuseable"></div>
+        <script src="../Assets/Assets-Scripts/LoadSide-Bar.js" defer></script> -->
 
-<head>
-    {% load static %}
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="{% static 'Styles/Login.css'%}">
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    <!-- <script src="{% static 'Scripts/Login.js'%}" defer></script> -->
-</head>
-
-<body>    
-    <!-- <div id="side-bar_reuseable"></div>
-    <script src="../Assets/Assets-Scripts/LoadSide-Bar.js" defer></script> -->
-
-    <header> <h1>Log In to DigitalDewey Online Library</h1> </header>
-    {% for message in messages %}
-        <div class="alert alert-{{ message.tags }}">
-            {{ message }}
-        </div>
-    {% endfor %}
-    <form  class="content"  method="post">
-        {% csrf_token %}
-        <div class="input_box">
-            <div class="input_field">
-                <label for="user" class="lbuser">Username</label>
-                <input type="text" id="user" placeholder="Enter Username" required name="username">
-                <ion-icon name="person" class="sIcon"></ion-icon>
+        <header> <h1>Log In to DigitalDewey Online Library</h1> </header>
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
             </div>
-        </div>
-        <div class="input_box">
-            <div class="input_field">
-                <label for="pass" class="lbpass">Password</label>
-                <input type="password" id="pass" placeholder="Enter Password" required minlength="3" maxlength="20" name="pass1">
-                <ion-icon name="lock-closed" class="sIcon"></ion-icon>
+        {% endfor %}
+        <form  class="content"  method="post">
+            {% csrf_token %}
+            <div class="input_box">
+                <div class="input_field">
+                    <label for="user" class="lbuser">Username</label>
+                    <input type="text" id="user" placeholder="Enter Username" required name="username">
+                    <ion-icon name="person" class="sIcon"></ion-icon>
+                </div>
             </div>
-        </div>
-        
-        <label for="chkbox">Remember Me<input type="checkbox" id="remmebx"></label>
+            <div class="input_box">
+                <div class="input_field">
+                    <label for="pass" class="lbpass">Password</label>
+                    <input type="password" id="pass" placeholder="Enter Password" required minlength="3" maxlength="20" name="pass1">
+                    <ion-icon name="lock-closed" class="sIcon"></ion-icon>
+                </div>
+            </div>
+            
+            <label for="chkbox">Remember Me<input type="checkbox" id="remmebx"></label>
 
-        <div class="forgot"><p>Forgot </p><a href="#user">Username</a> / <a href="#pass">Password </a>?</div>
+            <div class="forgot"><p>Forgot </p><a href="#user">Username</a> / <a href="#pass">Password </a>?</div>
 
-        <input type="submit" value="Login" class="buttonlog">
+            <input type="submit" value="Login" class="buttonlog">
 
-        <div class="notreg">Don't Have an Account Yet? <a href="{% url 'authentication:Signup' %}">SignUp Now!</a></div>
-    </form>
-</body>
-
+            <div class="notreg">Don't Have an Account Yet? <a href="{% url 'authentication:Signup' %}">SignUp Now!</a></div>
+        </form>
+    </body>
 </html>

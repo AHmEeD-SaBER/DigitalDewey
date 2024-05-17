@@ -1,100 +1,85 @@
 {% extends 'Assets-HTML/Footer.html'%}
 {% block content%}
 <html lang="en">
-<head>
-    {% load static %}
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js" defer></script>
-    <link rel="stylesheet" href="{% static 'Styles/Home.css'%}">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0" rel="stylesheet">
-    <script src="{% static 'Scripts/Home.js'%}" defer type=module></script> 
-</head>
-<body>
-    <header class="header">
-        <a class="Logo" href="{% url 'page:index' %}"><ion-icon name="library"></ion-icon>DigitalDewey</a>
-        <nav class="nav_bar">
-            <ul>
-                {% if user.is_authenticated %}
-                <li><a href="{% url 'page:Profile'%}" id="profileLink">{{user}}</a></li>
-                {%else%}
-                <li><a href="{% url 'authentication:Login'%}">Login</a></li>
-                {%endif%}
-                <li><a href="{%url 'page:AllBooks'%}">All Books</a></li>
-                <li><a href="{% url 'page:About'%}">About</a></li>
-            </ul>
-        </nav>
-    </header>
+    <head>
+        {% load static %}
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Home</title>
+        <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js" defer></script>
+        <link rel="stylesheet" href="{% static 'Styles/Home.css'%}">
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0" rel="stylesheet">
+        <script src="{% static 'Scripts/Home.js'%}" defer type=module></script> 
+    </head>
+    <body>
+        <header class="header">
+            <a class="Logo" href="{% url 'page:index' %}"><ion-icon name="library"></ion-icon>DigitalDewey</a>
+            <nav class="nav_bar">
+                <ul>
+                    {% if user.is_authenticated %}
+                    <li><a href="{% url 'page:Profile'%}" id="profileLink">{{user}}</a></li>
+                    {%else%}
+                    <li><a href="{% url 'authentication:Login'%}">Login</a></li>
+                    {%endif%}
+                    <li><a href="{%url 'page:AllBooks'%}">All Books</a></li>
+                    <li><a href="{% url 'page:About'%}">About</a></li>
+                </ul>
+            </nav>
+        </header>
 
-    <div class="container">
-        <div class="quote">
-            <h2>Reading is a journey of the mind,</h2>
-            <p> a voyage into the unknown that broadens our horizons and enriches our understanding. It’s a window into other worlds, cultures, and perspectives, allowing us to live a thousand lives in one. Reading nurtures our imagination, fuels our creativity, and sharpens our critical thinking</p>
+        <div class="container">
+            <div class="quote">
+                <h2>Reading is a journey of the mind,</h2>
+                <p> a voyage into the unknown that broadens our horizons and enriches our understanding. It’s a window into other worlds, cultures, and perspectives, allowing us to live a thousand lives in one. Reading nurtures our imagination, fuels our creativity, and sharpens our critical thinking</p>
 
-            <a href="#GetStarTed" id="startedaction">Get Started</a>
-        </div>
-        {% if not user.is_authenticated %}
-            <form action="{% url 'authentication:Login'%}" class="Join" id="join" method="post">
-                {% csrf_token %}
-                <h2>LogIn</h2>
-                <div class="input_Box">
-                    <p class="icon"><ion-icon name="person"></ion-icon></p>
-                    <input type="text"  id="EM" name="username">
-                    <label for="EM">Enter Your Username</label>
-                </div>
-                <div class="input_Box">
-                    <p class="icon"><ion-icon name="lock-closed"></ion-icon></p>
-                    <input type="password" id="P" name="pass1">
-                    <label for="P">Enter Your Password</label>
-                </div>
-                <div class="rME">
-                    <p>Don't Have An Account?<a href="{% url 'authentication:Signup'%}" target="_blank">SignUp</a></p>
-                </div>
-                <button type="submit" class="Sub" id="joinButton">Join</button>
-            </form>
-        {%endif%}
-    </div>
-
-    {%for section in sections %}
-        <div id = "GetStarTed" class="Slider_Content {{section}}">
-            <a href="Books.html#B14"><h2>{{section}}<ion-icon class="popIcon" {%if section == "Popular"%}name="trending-up-outline" {%elif section == "Sale"%} name = "pricetags-outline" {%else%} name ="book-outline" {%endif%}></ion-icon></h2></a>
-            <button id="prev" class="slider_Button material-symbols-rounded" onclick="initiateswipe()">chevron_left</button>
-            <div class="slider">
-            {% for book in books %}
-                {% if book.section == section%}
-                <div class="Card" >
-                    <div class="image">
-                        <a href="{% url 'page:Book_Details' book.id %}"><img src="{{ book.cover.url }}" width="180px" height="230px" name="{{book.title}}"  author = "{{book.author}}" category = "{{book.category}}" description = "{{book.description}}" availability = "{{book.available}}" price = "{{book.price}}"></a>
-                    </div>
-                </div>
-                {% endif %}
-            {% endfor %}
-            <button id="next" class="slider_Button material-symbols-rounded" onclick="initiateswipe()">chevron_right</button>
+                <a href="#GetStarTed" id="startedaction">Get Started</a>
             </div>
-
-
+            {% if not user.is_authenticated %}
+                <form action="{% url 'authentication:Login'%}" class="Join" id="join" method="post">
+                    {% csrf_token %}
+                    <h2>LogIn</h2>
+                    <div class="input_Box">
+                        <p class="icon"><ion-icon name="person"></ion-icon></p>
+                        <input type="text"  id="EM" name="username">
+                        <label for="EM">Enter Your Username</label>
+                    </div>
+                    <div class="input_Box">
+                        <p class="icon"><ion-icon name="lock-closed"></ion-icon></p>
+                        <input type="password" id="P" name="pass1">
+                        <label for="P">Enter Your Password</label>
+                    </div>
+                    <div class="rME">
+                        <p>Don't Have An Account?<a href="{% url 'authentication:Signup'%}" target="_blank">SignUp</a></p>
+                    </div>
+                    <button type="submit" class="Sub" id="joinButton">Join</button>
+                </form>
+            {%endif%}
         </div>
-    {% endfor %}
 
-    <script src="{% static 'Scripts/Sliderswiper.js'%}" defer></script>
-    <script src="{% static 'Scripts/BookDetails.js'%}" defer></script> 
-    <script src="{% static 'Scripts/ShowBookDetails.js'%}" defer> </script>
-</body>
-<footer>
-    <div id="footer_reuseable"></div>
-    <script src="Assets/Assets-Scripts/loadfooter.js" defer></script>
-    <style>
-        hr{
-            margin: auto;
-            width: 100%;
-            border: none;
-            border-radius: 0;
-            height: 5px;
-            background-color: rgb(255, 255, 255);
+        {%for section in sections %}
+            <div id = "GetStarTed" class="Slider_Content {{section}}">
+                <a href="#"><h2>{{section}}<ion-icon class="popIcon" {%if section == "Popular"%}name="trending-up-outline" {%elif section == "Sale"%} name = "pricetags-outline" {%else%} name ="book-outline" {%endif%}></ion-icon></h2></a>
+                <button id="prev" class="slider_Button material-symbols-rounded" onclick="initiateswipe()">chevron_left</button>
+                <div class="slider">
+                {% for book in books %}
+                    {% if book.section == section%}
+                    <div class="Card" >
+                        <div class="image">
+                            <a href="{% url 'page:Book_Details' book.id %}"><img src="{{ book.cover.url }}" width="180px" height="230px" name="{{book.title}}"  author = "{{book.author}}" category = "{{book.category}}" description = "{{book.description}}" availability = "{{book.available}}" price = "{{book.price}}"></a>
+                        </div>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+                <button id="next" class="slider_Button material-symbols-rounded" onclick="initiateswipe()">chevron_right</button>
+                </div>
 
-        }
-    </style>
-</footer>
+
+            </div>
+        {% endfor %}
+
+        <script src="{% static 'Scripts/Sliderswiper.js'%}" defer></script>
+        <script src="{% static 'Scripts/BookDetails.js'%}" defer></script> 
+        <script src="{% static 'Scripts/ShowBookDetails.js'%}" defer> </script>
+    </body>
 </html>
 {% endblock %}

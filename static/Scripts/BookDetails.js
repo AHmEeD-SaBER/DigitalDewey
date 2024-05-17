@@ -182,32 +182,32 @@ function hideOrShowButton() {
 //     }
 // });
 
-// document.getElementById("readButton").addEventListener("click", function () {
-//     const isLoggedIn = checkIsLoggedIn();
-//     if(!isLoggedIn) {
-//         if (bookAvailability === "Available") {
-//             document.getElementById("borrowButton").textContent = "Borrow";
-//           } else {
-//             document.getElementById("borrowButton").textContent = "Request";
-//           }
-//         alert('Please Login First!');
-//         window.location.href = '../HTML/Login.html'
-//         return;
-//     } else {
-//         addBook(
-//             bookName,
-//             bookPrice,
-//             bookImageSrc,
-//             bookAuthor,
-//             bookCategory,
-//             bookAvailability,
-//             bookDescription,
-//             "ReadBooks"
-//           );
-//         rmvDupesInLocalStorage("ReadBooks");
-//         alert("Book Added To Read List But No Book Reading Functionality Yet!! SRY");
-//     }
-// });
+document.getElementById("readButton").addEventListener("click", function () {
+    const isLoggedIn = true
+    if(!isLoggedIn) {
+        if (bookAvailability === "Available") {
+            document.getElementById("borrowButton").textContent = "Borrow";
+          } else {
+            document.getElementById("borrowButton").textContent = "Request";
+          }
+        alert('Please Login First!');
+        window.location.href = '../HTML/Login.html'
+        return;
+    } else {
+        addBook(
+            bookName,
+            bookPrice,
+            bookImageSrc,
+            bookAuthor,
+            bookCategory,
+            bookAvailability,
+            bookDescription,
+            "ReadBooks"
+          );
+        rmvDupesInLocalStorage("ReadBooks");
+        alert("Book Added To Read List But No Book Reading Functionality Yet!! SRY");
+    }
+});
 
 function isBorrowedfunc() {
   if (isBorrowed) {
@@ -222,54 +222,54 @@ function isBorrowedfunc() {
 // hideOrShowButton();
 // borrowBookFunc();
 
-// function editBookDetails() {
-//   const textContainer = document.getElementById("text-container");
-//   textContainer.innerHTML = "";
+function editBookDetails() {
+  const textContainer = document.getElementById("text-container");
+  textContainer.innerHTML = "";
 
-//   const fields = [
-//     "name",
-//     "author",
-//     "category",
-//     "price",
-//     "availability",
-//     "description",
-//     "section",
-//     "imageSrc",
-//   ];
-//   const form = document.createElement("form");
-//   form.id = "editForm";
+  const fields = [
+    "name",
+    "author",
+    "category",
+    "price",
+    "availability",
+    "description",
+    "section",
+    "imageSrc",
+  ];
+  const form = document.createElement("form");
+  form.id = "editForm";
 
-//   fields.forEach((field) => {
-//     const label = document.createElement("label");
-//     label.htmlFor = `${field}-input`;
-//     label.textContent = `${capitalize(field)}: `;
-//     label.id = `${field}-input-label`;
-//     const input = document.createElement(
-//       field === "description" ? "textarea" : "input"
-//     );
-//     input.id = `${field}-input`;
-//     input.name = field;
-//     input.value = sessionStorage.getItem(field);
-//     form.appendChild(label);
-//     form.appendChild(input);
-//     form.appendChild(document.createElement("br"));
-//   });
+  fields.forEach((field) => {
+    const label = document.createElement("label");
+    label.htmlFor = `${field}-input`;
+    label.textContent = `${capitalize(field)}: `;
+    label.id = `${field}-input-label`;
+    const input = document.createElement(
+      field === "description" ? "textarea" : "input"
+    );
+    input.id = `${field}-input`;
+    input.name = field;
+    input.value = sessionStorage.getItem(field);
+    form.appendChild(label);
+    form.appendChild(input);
+    form.appendChild(document.createElement("br"));
+  });
 
-//   const saveButton = document.getElementById("saveButton");
+  const saveButton = document.getElementById("saveButton");
 //   saveButton.onclick = saveBookDetails;
-//   saveButton.style.display = "flex";
+  saveButton.style.display = "flex";
 
-//   const cancelButton = document.getElementById("cancelButton");
-//   cancelButton.style.display = "flex";
-//   cancelButton.onclick = () => window.location.reload();
-//   form.appendChild(saveButton);
-//   form.appendChild(cancelButton);
-//   textContainer.appendChild(form);
+  const cancelButton = document.getElementById("cancelButton");
+  cancelButton.style.display = "flex";
+  cancelButton.onclick = () => window.location.reload();
+  form.appendChild(saveButton);
+  form.appendChild(cancelButton);
+  textContainer.appendChild(form);
 
-//   document.getElementById("imageSrc-input").style.display = "none";
-//   document.getElementById("imageSrc-input-label").style.display = "none";
-//   document.getElementById("editButton").disabled = true;
-// }
+  document.getElementById("imageSrc-input").style.display = "none";
+  document.getElementById("imageSrc-input-label").style.display = "none";
+  document.getElementById("editButton").disabled = true;
+}
 
 // function saveBookDetails() {
 //   const form = document.getElementById("editForm");
@@ -307,7 +307,8 @@ function isBorrowedfunc() {
 //     }
 //   }
 
-// document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () {
+    console.log('hyello');
 //     initializeLocalStorage('RequestedBooks');
 //     initializeLocalStorage('ReadBooks');
 //     initializeLocalStorage('BorrowedBooks');
@@ -339,11 +340,11 @@ function isBorrowedfunc() {
 //       deleteBookFromLibrary(bookName);
 //     });
 //   }
-//   const editButton = document.getElementById("editButton");
-//   if (editButton) {
-//     editButton.addEventListener("click", function () {
-//       document.getElementById("editButton").style.display = "none";
-//       editBookDetails();
-//     });
-//   }
-// });
+  const editButton = document.getElementById("editButton");
+  if (editButton) {
+    editButton.addEventListener("click", function () {
+      document.getElementById("editButton").style.display = "none";
+      editBookDetails();
+    });
+  }
+});

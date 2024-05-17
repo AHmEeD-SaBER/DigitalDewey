@@ -1,16 +1,11 @@
 <head>
   {% load static %}
-  <script
-    type="module"
-    src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
-  ></script>
-  <script
-    nomodule
-    src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
-  ></script>
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
   <link rel="stylesheet" href="{% static 'Styles/Footer.css'%}">
 </head>
-  <header class="header">
+  
+<header class="header">
     <a class="Logo" href="{% url 'page:index' %}"><ion-icon name="library"></ion-icon>DigitalDewey</a>
     <nav class="nav_bar">
         <ul>
@@ -23,7 +18,7 @@
             <li><a href="{% url 'page:About'%}">About</a></li>
         </ul>
     </nav>
-  </header>
+</header>
 {% block content%}
 {% endblock %}
 <div class="footer">
@@ -56,10 +51,10 @@
     <div class="col">
       <h2>Links</h2>
       <ul>
-        <li><a href="../../HTML/Home.html">Home</a></li>
-        <li><a href="../../HTML/Books.html">All Books</a></li>
-        <li><a href="../../HTML/Categories.html">Categories</a></li>
-        <li><a href="../../HTML/Profile.html">Profile</a></li>
+        <li><a href="{% url 'page:index'%}">Home</a></li>
+        <li><a href="{% url 'page:AllBooks'%}">All Books</a></li>
+        <li><a href="{% url 'page:Profile'%}">Profile</a></li>
+        <li><a href="{% url 'page:About'%}">About</a></li>
       </ul>
     </div>
 
