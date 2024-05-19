@@ -195,7 +195,7 @@ body::after {
     border-radius: 30px;
   }
 }
-#name-input,
+#title-input,
 #author-input,
 #price-input,
 #category-input,
@@ -206,7 +206,8 @@ body::after {
   outline: none;
   border: none;
 }
-#name-input,
+#title-input,
+#cover-input,
 #author-input,
 #price-input,
 #category-input,
@@ -229,7 +230,7 @@ body::after {
   margin-left: 35px;
 }
 
-#name-input {
+#title-input {
   margin-left: 40px;
 }
 

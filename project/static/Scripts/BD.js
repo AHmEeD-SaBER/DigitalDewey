@@ -15,7 +15,7 @@ document.getElementById("availability").textContent = bookAvailability ==="True"
 document.getElementById("category").textContent = " - " + bookCategory;
 document.getElementById("author").textContent = "Written By " + bookAuthor;
 document.getElementById("description").textContent = bookDescription;
-  document.getElementById("readButton").textContent = "Read Now!";
+document.getElementById("readButton").textContent = "Read Now!";
 
 const ionicon = document.getElementById("ionicon");
 if (bookAvailability === "True") {
@@ -208,18 +208,78 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById("readButton").style.display = "none";
     }
 
-    // const delButton = document.getElementById("delButton");
-    // if (delButton) {
-    //     delButton.addEventListener("click", () => {
-    //         //deletebook method
-    //     });
-    // }
-
     const editButton = document.getElementById("editButton");
     if (editButton) {
         editButton.addEventListener("click", function () {
         document.getElementById("editButton").style.display = "none";
         editBookDetails();
+        });
+    }
+
+    const urlParts = window.location.pathname.split('/');
+    const bookId = urlParts[urlParts.length - 2];
+
+    document.getElementById('saveButton').addEventListener('click', function() {    
+        const formData = new FormData();
+        formData.append('title', document.getElementById('name-input').value);
+        formData.append('author', document.getElementById('author-input').value);
+        formData.append('category', document.getElementById('category-input').value);
+        formData.append('price', document.getElementById('price-input').value);
+        formData.append('availability', document.getElementById('availability-input').value === "Available");
+        formData.append('description', document.getElementById('description-input').value);
+    
+        fetch(`/Books/edit/${bookId}/`, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken')
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message) {
+                alert('Book updated successfully');
+                window.location.href = '/';
+            } else {
+                console.error('Failed to update book: ', data.error);
+                alert('Failed to update book');
+            }
+        })
+        .catch(error => console.error('Error:', error));
     });
-  }
+
+    document.getElementById('delButton').addEventListener('click', function() {
+        fetch(`/Books/delete/${bookId}/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken')
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data) {
+                alert('Book deleted successfully');
+                window.location.href = '/';
+            } else {
+                alert('Error deleting book');
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    });
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
 });

@@ -1,31 +1,35 @@
+{% extends 'Assets-HTML/Footer.html' %}
+{% block content %}
 <!DOCTYPE html>
 <html>
     <head>
         {% load static %}
         <title>Add-Book</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- <link rel="stylesheet" href="../Styles/AddBook.css"> -->
-        <!-- <link rel="stylesheet" href="../Styles/Bookdetails.css"> -->
+        <link rel="stylesheet" href="{% static 'Styles/AddBook.css' %}">
+        <link rel="stylesheet" href="{% static 'Styles/Bookdetails.css' %}">
         <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
         <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-        <!-- <script src="../Scripts/AddBook.js" defer></script> -->
+        <script src="{% static '/Scripts/AddBook.js' %}" defer></script>
         <!-- <script src="../Scripts/BookDetails.js" defer></script>  -->
         <!-- <script src="../scripts/ShowBookDetails.js" defer></script> -->
     </head>
 
     <body>
-        <div id="side-bar_reuseable"></div>
-        <script src="../Assets/Assets-Scripts/LoadSide-Bar.js" defer></script>
+        <!-- <div id="side-bar_reuseable"></div>
+        <script src="../Assets/Assets-Scripts/LoadSide-Bar.js" defer></script> -->
 
         <div class="wraper">
-            <form id="editForm">
+            <form id="editForm"  method="post" enctype="multipart/form-data">
 
-                <label for="name-input" id="name-input-label" >Name:</label>
-                <input id="name-input" name="name" placeholder="Book Name">
+                {% csrf_token %}
+                {{ form.as_p }}
+
+                <label for="title-input" id="name-input-label">Name:</label>
+                <input id="title-input" name="title" placeholder="Book Name">
 
                 <br>
-
-                <label for="author-input" id="author-input-label">Author:</label>
+                <label for="author-input"  id="author-input-label">Author:</label>
                 <input id="author-input" name="author" placeholder="Book Author">
 
                 <br>
@@ -41,7 +45,6 @@
                 <input id="availability-input" name="availability" placeholder="Book Availability">
                 
                 <br>
-                
                 <label for="description-input" id="description-input-label">Description: </label>
                 <textarea id="description-input" name="description" placeholder="Book Description"></textarea>
                 
@@ -50,12 +53,13 @@
                 <input id="section-input" name="section" placeholder="Book Section">
                 
                 <br>
-                <label for="imageSrc-input" id="imageSrc-input-label" style="display: none;">ImageSrc:</label>           
-                <input id="imageSrc-input" name="imageSrc" style="display: none;" placeholder="Book Cover Url">
+                <label for="cover-input" id="imageSrc-input-label">Cover Image:</label>
+                <input id="cover-input" name="cover" type="file">
 
                 <br>
-                <button class="btn1" id="submitButton" type="button" style="display: flex;">ADD</button>
+                <button class="btn1" id="submitButton" style="display: flex;" type="submit">ADD</button>
             </form>
         </div>
     </body>
 </html>
+{% endblock %}

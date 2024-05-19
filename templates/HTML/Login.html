@@ -1,3 +1,5 @@
+{% extends 'Assets-HTML/Footer.html' %}
+{% block content %}
 <!DOCTYPE html>
 <html>
     <head>
@@ -36,9 +38,7 @@
                 </div>
             </div>
             
-            <label for="chkbox">Remember Me<input type="checkbox" id="remmebx"></label>
-
-            <div class="forgot"><p>Forgot </p><a href="#user">Username</a> / <a href="#pass">Password </a>?</div>
+            <!-- <div class="forgot"><p>Forgot </p><a href="#user">Username</a> / <a href="#pass">Password </a>?</div> -->
 
             <input type="submit" value="Login" class="buttonlog">
 
@@ -46,3 +46,4 @@
         </form>
     </body>
 </html>
+{% endblock %}

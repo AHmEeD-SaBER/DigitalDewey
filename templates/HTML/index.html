@@ -20,6 +20,7 @@
                     {% if user.is_authenticated %}
                     <li><a href="{% url 'page:Profile'%}" id="profileLink">{{user}}</a></li>
                     {%else%}
+                    <a href="{% url 'page:AddBook' %}">Add New Book</a>
                     <li><a href="{% url 'authentication:Login'%}">Login</a></li>
                     {%endif%}
                     <li><a href="{%url 'page:AllBooks'%}">All Books</a></li>
@@ -73,7 +74,7 @@
                 {% endfor %}
                 <button id="next" class="slider_Button material-symbols-rounded" onclick="initiateswipe()">chevron_right</button>
                 </div>
-                <hr><br><br>
+                <br><br>
             </div>
         {% endfor %}
 

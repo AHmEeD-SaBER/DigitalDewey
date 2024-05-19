@@ -37,10 +37,6 @@ function handleSubmit() {
       errorMessage += "Please select a role (Admin or User).\n";
     }
 
-    // if (chkBoxNews){
-    //     sendToeEmail(); Doesnt Exist
-    // }
-
     if (errorMessage) {
       alert(errorMessage);
       return;

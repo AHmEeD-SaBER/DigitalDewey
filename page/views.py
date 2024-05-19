@@ -30,8 +30,9 @@ def About(request):
 
 def Profile(request):
     return render(request, 'HTML/Profile.html' )
-def Categories(request):
-    return render(request, 'HTML/Categories.html' )
+
+def AddBook(request):
+    return render(request, 'HTML/AddBook.html' )
 
 def Allbooks(request):
     books = Book.objects.all()
