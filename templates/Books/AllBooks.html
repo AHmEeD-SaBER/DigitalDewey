@@ -52,7 +52,6 @@
             </section>
             {% endfor %}
         </div>
-        <script src="{% static 'Scripts/BookDetails.js'%}" defer></script> 
         <script src="{% static 'Scripts/ShowBookDetails.js'%}" defer> </script>
         <script src="{% static 'Scripts/Sliderswiper.js'%}" defer></script>
         <script>
@@ -87,6 +86,8 @@
                         bookImage.setAttribute('availability', book.fields.available);
                         bookImage.setAttribute('price', book.fields.price);                 
                         bookImage.className = 'book-image';
+
+                        // header.textContent = book.fields.category;
                         
                         var bookLink = document.createElement('a');
                         bookLink.href = "/Book_Details/" + book.pk + "/";
@@ -115,6 +116,24 @@
                     }
                 }
             }
+            
+            function scrollToHash() {
+                const hash = window.location.hash.substring(1);
+                const params = new URLSearchParams(hash);
+                const categoryToScroll = params.get("Category");
+                setTimeout(() => {
+                    const element = document.getElementById(categoryToScroll);
+                    if (element) {
+                    const elementPosition = element.getBoundingClientRect().top;
+                    window.scrollTo({
+                        top: elementPosition - 230,
+                        behavior: "smooth",
+                    });
+                    history.replaceState(null, null, " ");
+                    }
+                }, 150);
+            }
+
             document.addEventListener('DOMContentLoaded', function() {
                 const searchInput = document.getElementById('search-input');
                 const availableCheckbox = document.getElementById('available-only-checkbox');
@@ -126,12 +145,19 @@
 
                     fetch(url)
                         .then(response => response.json())
-                        .then(data => { updatePage(data); })
+                        .then(data => {
+                            if(data === '[]'){
+                                document.getElementById('library-container').innerHTML ='<p class="nobooks">No books found that match your search criteria.</p>';
+                            } else {
+                                updatePage(data);
+                            }
+                        })
                         .catch(error => console.error('Error fetching books:', error));
                 }
 
                 searchInput.addEventListener('input', fetchBooks);
                 availableCheckbox.addEventListener('change', fetchBooks);
+                scrollToHash();
             });
         </script>
     </body>

@@ -75,19 +75,36 @@ function editBookDetails() {
     document.getElementById("editButton").disabled = true;
 }
 
-function checkIsAdmin() {
-    
+function isAdmin() {
+    fetch('/auth/api/user/')
+        .then(response => response.json())
+        .then(data => {
+            if (data.is_staff) {
+                document.getElementById("delButton").style.display = "flex";
+                document.getElementById("editButton").style.display = "flex";
+            } else {
+                document.getElementById("delButton").style.display = "none";
+                document.getElementById("editButton").style.display = "none";
+            }
+        })
+        .catch(error => console.error('Error fetching user info:', error));
 }
 
-function hideOrShowButton() {
-    let isAdmin = true;
-  
-    if (isAdmin == true) {
-      document.getElementById("delButton").style.display = "flex";
-      document.getElementById("editButton").style.display = "flex";
-    } else {
-      document.getElementById("delButton").style.display = "none";
-      document.getElementById("editButton").style.display = "none";
+async function isLoggedIn() {
+    try {
+        const response = await fetch('/auth/api/loggedin/');
+        const data = await response.json();
+        if (data.is_logged_in) {
+            isAdmin();
+            return true;
+        } else {
+            document.getElementById("delButton").style.display = "none";
+            document.getElementById("editButton").style.display = "none";
+            return false;
+        }
+    } catch (error) {
+        console.error('Error checking login status:', error);
+        return false;
     }
 }
 
@@ -117,48 +134,58 @@ function isBookBorrowed(bookName) {
 
 let isBorrowed = false;
 
-document.getElementById("borrowButton").addEventListener("click", function () {
-    const isLoggedIn = true;
-    if(!isLoggedIn) {
-        alert('Please Login First!');
-        // window.location.href = window.location.href = "{% url 'authentication:Login' %}";
-        return;
-    } else {
-        console.log(bookAvailability)
-        if (bookAvailability === 'True') {
-            addBook(bookName, bookPrice, bookImageSrc, bookAuthor, bookCategory, bookAvailability, bookDescription, "BorrowedBooks");
-
-            // rmvDupesInLocalStorage("BorrowedBooks");
-            alert("Book Has Been Added To Borrowed Books List");
-            isBorrowed = true;
-          } else {
-            addBook(bookName, bookPrice, bookImageSrc, bookAuthor, bookCategory, bookAvailability, bookDescription, "RequestedBooks");
-            alert("Book Has Been Added To Requested Books List");
-            isBorrowed = false;
-          }
-          isBorrowedfunc();
-    }
+document.getElementById("borrowButton").addEventListener("click", async function () {
+    try {
+        const response = await fetch('/auth/api/loggedin/');
+        const data = await response.json();
+        if (data.is_logged_in) {
+            if (bookAvailability === 'True') {
+                addBook(bookName, bookPrice, bookImageSrc, bookAuthor, bookCategory, bookAvailability, bookDescription, "BorrowedBooks");
+                // rmvDupesInLocalStorage("BorrowedBooks");
+                alert("Book Has Been Added To Borrowed Books List");
+                isBorrowed = true;
+              } else {
+                addBook(bookName, bookPrice, bookImageSrc, bookAuthor, bookCategory, bookAvailability, bookDescription, "RequestedBooks");
+                alert("Book Has Been Added To Requested Books List");
+                isBorrowed = false;
+              }
+              isBorrowedfunc();
+        } else {
+            alert('Please Login First!');
+            window.location.href = '/auth/login/';
+            return;
+        }
+    } catch (error) {
+        console.error('Error checking login status:', error);
+        return false;
+    }  
 });
 
-document.getElementById("readButton").addEventListener("click", function () {
-    const isLoggedIn = true
-    if(!isLoggedIn) {
-        alert('Please Login First!');
-        window.location.href = "{% url 'authentication:Login' %}";
-        return;
-    } else {
-        addBook(
-            bookName,
-            bookPrice,
-            bookImageSrc,
-            bookAuthor,
-            bookCategory,
-            bookAvailability,
-            bookDescription,
-            "ReadBooks"
-          );
-        // rmvDupesInLocalStorage("ReadBooks");
-        alert("Book Added To Read List But No Book Reading Functionality Yet!! SRY");
+document.getElementById("readButton").addEventListener("click", async function () {
+    try {
+        const response = await fetch('/auth/api/loggedin/');
+        const data = await response.json();
+        if (data.is_logged_in) {
+            addBook(
+                bookName,
+                bookPrice,
+                bookImageSrc,
+                bookAuthor,
+                bookCategory,
+                bookAvailability,
+                bookDescription,
+                "ReadBooks"
+              );
+            // rmvDupesInLocalStorage("ReadBooks");
+            alert("Book Added To Read List But No Book Reading Functionality Yet!! SRY");
+        } else {
+            alert('Please Login First!');
+            window.location.href = '/auth/login/';
+            return;
+        }
+    } catch (error) {
+        console.error('Error checking login status:', error);
+        return false;
     }
 });
 
@@ -188,6 +215,20 @@ function initializeLocalStorage(key) {
       localStorage.setItem(key, JSON.stringify([]));
     }
 }
+////////////////////////////////////////////////
+////////////////////////////////////////////////
+////////////////////////////////////////////////
+////////////////////////////////////////////////
+////////////////////////////////////////////////
+////////////////////////////////////////////////
+////////////////////////////////////////////////
+///////// implement return book ////////////////
+////////////////////////////////////////////////
+////////////////////////////////////////////////
+////////////////////////////////////////////////
+////////////////////////////////////////////////
+////////////////////////////////////////////////
+////////////////////////////////////////////////
 
 document.addEventListener('DOMContentLoaded', function() {
     initializeLocalStorage('RequestedBooks');
@@ -195,9 +236,8 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeLocalStorage('BorrowedBooks');
     initializeLocalStorage('LastSeenBooks');
     addBook(bookName, bookPrice, bookImageSrc, bookAuthor, bookCategory, bookAvailability, bookDescription, "LastSeenBooks");
-
-    hideOrShowButton();
-    console.log('mewo')
+    
+    isLoggedIn()
 
     const bookIsBorrowed = isBookBorrowed(bookName);
     if (bookIsBorrowed) {

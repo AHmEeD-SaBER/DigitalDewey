@@ -16,6 +16,9 @@
             {%endif%}
             <li><a href="{%url 'page:AllBooks'%}">All Books</a></li>
             <li><a href="{% url 'page:About'%}">About</a></li>
+            {% if user.is_authenticated %}
+            <li><a href="{%url 'authentication:Logout'%}">Logout</a></li>
+            {%endif%}
         </ul>
     </nav>
 </header>
@@ -27,10 +30,7 @@
     <div class="col">
       <a href=""><h2>About DigitalDewey</h2></a>
       <p>
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Architecto
-        neque nam optio ducimus a molestiae quaerat placeat, esse facere
-        pariatur debitis accusantium repellat, hic, perspiciatis blanditiis
-        possimus excepturi adipisci. Facere?
+        a voyage into the unknown that broadens our horizons and enriches our understanding. It’s a window into other worlds, cultures, and perspectives, allowing us to live a thousand lives in one. Reading nurtures our imagination, fuels our creativity, and sharpens our critical thinking
       </p>
     </div>
 

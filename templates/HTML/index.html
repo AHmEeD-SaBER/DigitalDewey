@@ -10,7 +10,7 @@
         <link rel="stylesheet" href="{% static 'Styles/Home.css'%}">
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0" rel="stylesheet">
         <script src="{% static 'Scripts/Home.js'%}" defer type=module></script> 
-        <script src="{% static 'Scripts/BD.js'%}" defer></script> 
+        <!-- <script src="{% static 'Scripts/BD.js'%}" defer></script> -->
     </head>
     <body>
         <header class="header">
@@ -20,11 +20,14 @@
                     {% if user.is_authenticated %}
                     <li><a href="{% url 'page:Profile'%}" id="profileLink">{{user}}</a></li>
                     {%else%}
-                    <li><a href="{% url 'page:AddBook' %}">Add New Book</a></li>
                     <li><a href="{% url 'authentication:Login'%}">Login</a></li>
                     {%endif%}
+                    <li  id="addBook"><a href="{% url 'page:AddBook' %}">Add New Book</a></li>
                     <li><a href="{%url 'page:AllBooks'%}">All Books</a></li>
                     <li><a href="{% url 'page:About'%}">About</a></li>
+                    {% if user.is_authenticated %}
+                    <li><a href="{%url 'authentication:Logout'%}">Logout</a></li>
+                    {%endif%}
                 </ul>
             </nav>
         </header>
@@ -80,6 +83,9 @@
 
         <script src="{% static 'Scripts/Sliderswiper.js'%}" defer></script>
         <script src="{% static 'Scripts/ShowBookDetails.js'%}" defer> </script>
+        <script>
+
+        </script>
     </body>
 </html>
 {% endblock %}

@@ -1,32 +1,8 @@
-// function displayNoBooksFound() {
-//   const container = document.getElementById("library-container");
-//   container.innerHTML =
-//     '<p class="nobooks">No books found that match your search criteria.</p>';
-// }
-
-// function filterBooks() {
-//   const searchText = document
-//     .getElementById("search-input")
-//     .value.toLowerCase();
-//   const showAvailableOnly = document.getElementById(
-//     "available-only-checkbox"
-//   ).checked;
-
-//   let filteredBooks = library.filter(
-//     (book) =>
-//       (!searchText ||
-//         book.title.toLowerCase().includes(searchText) ||
-//         book.author.toLowerCase().includes(searchText) ||
-//         book.category.toLowerCase().includes(searchText)) &&
-//       (!showAvailableOnly || book.available)
-//   );
-
-//   if (filteredBooks.length === 0) {
-//     displayNoBooksFound();
-//   } else {
-//     displayBooksByCategory(groupBooksByCategory(filteredBooks));
-//   }
-// }
+function displayNoBooksFound() {
+  const container = document.getElementById("library-container");
+  container.innerHTML =
+    '<p class="nobooks">No books found that match your search criteria.</p>';
+}
 
 // function groupBooksByCategory(books) {
 //   if (!books || !Array.isArray(books)) {
@@ -168,60 +144,7 @@ function displayCategorySlider() {
 //   }
 // }
 
-// function scrollToHash() {
-//   const hash = window.location.hash.substring(1);
-//   const params = new URLSearchParams(hash);
-//   const categoryToScroll = params.get("Category");
-//   setTimeout(() => {
-//     const element = document.getElementById(categoryToScroll);
-//     if (element) {
-//       const elementPosition = element.getBoundingClientRect().top;
-//       window.scrollTo({
-//         top: elementPosition - 230,
-//         behavior: "smooth",
-//       });
-//       history.replaceState(null, null, " ");
-//     }
-//   }, 150);
-// }
 
-// function setupSearch() {
-//   const urlParams = new URLSearchParams(window.location.search);
-//   const searchQuery = urlParams.get("search");
-
-//   const searchInput = document.getElementById("search-input");
-//   if (searchQuery) {
-//     searchInput.value = searchQuery;
-//   }
-
-//   searchInput.addEventListener("input", () => {
-//     updateUrlWithSearch(searchInput.value);
-//     filterBooks();
-//   });
-
-//   window.addEventListener("beforeunload", () => {
-//     history.replaceState({}, document.title, window.location.pathname);
-//   });
-
-//   filterBooks();
-// }
-
-// function updateUrlWithSearch(searchText) {
-//   const newUrl = new URL(window.location);
-//   newUrl.searchParams.set("search", searchText);
-//   history.pushState({}, "", newUrl);
-// }
-
-// function handleUrlSearchQuery() {
-//   const urlParams = new URLSearchParams(window.location.search);
-//   const searchQuery = urlParams.get("search");
-
-//   if (searchQuery) {
-//     const searchInput = document.getElementById("search-input");
-//     searchInput.value = searchQuery;
-//     filterBooks();
-//   }
-// }
 
 // function filterBooksByCategory(selectedCategory) {
 //   const searchText = document
@@ -249,15 +172,8 @@ function displayCategorySlider() {
 // }
 
 document.addEventListener("DOMContentLoaded", () => {
-  // setupSearch();
   displayCategorySlider();
   // initiateswipe();
-  // handleUrlSearchQuery();
-  // document
-  //   .getElementById("available-only-checkbox")
-  //   .addEventListener("change", filterBooks);
-  // document
-  //   .getElementById("search-input")
-  //   .addEventListener("input", filterBooks);
-  // scrollToHash();
+ 
+  scrollToHash();
 });

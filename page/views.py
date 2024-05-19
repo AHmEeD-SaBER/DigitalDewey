@@ -19,14 +19,11 @@ def index(request):
             login(request, user)
             return HttpResponseRedirect(reverse('page:index'), {'user': username})
         else:
-            return redirect('Login')
+            return redirect('page:index')
     return render(request, 'HTML/index.html', {'books': books , 'sections':sections})
-
-
 
 def About(request):
     return render(request, 'HTML/About.html' )
-
 
 def Profile(request):
     return render(request, 'HTML/Profile.html' )
