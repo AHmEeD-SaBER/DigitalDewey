@@ -67,3 +67,15 @@ def signout(request):
 @login_required
 def is_admin(request):
     return JsonResponse({'is_admin': request.user.is_superuser})
+
+@login_required
+def user_info(request):
+    data = {
+        'is_staff': request.user.is_staff,
+    }
+    return JsonResponse(data)
+
+def is_logged_in(request):
+    return JsonResponse({
+        'is_logged_in': request.user.is_authenticated
+    })
