@@ -138,9 +138,14 @@
                 const searchInput = document.getElementById('search-input');
                 const availableCheckbox = document.getElementById('available-only-checkbox');
 
+                
                 function fetchBooks() {
                     const query = searchInput.value.trim();
                     const available = availableCheckbox.checked;
+                    if (!available) {
+                        document.getElementById('library-container').innerHTML = originalContent;
+                        return;
+                    }
                     const url = `/Books/avail-search?query=${encodeURIComponent(query)}&available=${available}`;
 
                     fetch(url)
