@@ -10,7 +10,7 @@ import json
 
 def index(request):
     books = Book.objects.all()
-    sections = Book.objects.values_list('section', flat=True).distinct().exclude(section = "None")
+    sections = Book.objects.values_list('section', flat=True).distinct().filter(section__in=["Popular", "Sale", "Most Read"])
     if request.method == 'POST':
         username = request.POST['username']
         pass1 = request.POST['pass1']
