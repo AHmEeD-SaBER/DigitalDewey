@@ -42,10 +42,10 @@
                 {% for book in books %}
                 {% if book.category == category %}
                 <div class="book-div Card">
-                    <a href="{% url 'page:Book_Details' book.id %}" class="link-class"><img src="{{ book.cover.url }}" width="180px" height="230px" name="{{book.title}}"  author = "{{book.author}}" category = "{{book.category}}" description = "{{book.description}}" availability = "{{book.available}}" price = "{{book.price}}" class="book-image"></a>
+                    <a href="{% url 'page:Book_Details' book.id %}" class="link-class"><img src="{{ book.cover.url }}" width="180px" height="230px" name="{{book.title}}"  author = "{{book.author}}" category = "{{book.category}}" description = "{{book.description}}" availability = "{{book.available}}" price = "{{book.price}}" section = "{{book.section}}" class="book-image"></a>
                     <h3 class="book-name">{{book.title}}</h3>
                     <p class="book-author">{{book.author}}</p>
-                    <p {% if book.available %} class = "available-true" {%else%} class="available-false" {%endif%}>{% if book.available %}Available {% else%} Unavailable {%endif%}</p>
+                    <p {% if book.available == 'Available' %} class = "available-true" {%else%} class="available-false" {%endif%}>{% if book.available == 'Available' %}Available {% else%} Unavailable {%endif%}</p>
                 </div>
                 {% endif %}
                 {% endfor %}
@@ -106,8 +106,12 @@
                         bookDiv.appendChild(bookAuthor);
 
                         var bookAvailability = document.createElement('p');
-                        bookAvailability.className = book.fields.available ? 'available-true' : 'available-false';
-                        bookAvailability.textContent = book.fields.available ? 'Available' : 'Unavailable';
+                        bookAvailability.textContent = book.fields.available
+                        if(book.fields.available === 'Available'){
+                            bookAvailability.className = 'available-true';
+                        } else {
+                            bookAvailability.className = 'available-false';
+                        }
                         bookDiv.appendChild(bookAvailability);
 
                         section.appendChild(bookDiv);
@@ -137,15 +141,9 @@
             document.addEventListener('DOMContentLoaded', function() {
                 const searchInput = document.getElementById('search-input');
                 const availableCheckbox = document.getElementById('available-only-checkbox');
-
-                
                 function fetchBooks() {
                     const query = searchInput.value.trim();
                     const available = availableCheckbox.checked;
-                    if (!available) {
-                        document.getElementById('library-container').innerHTML = originalContent;
-                        return;
-                    }
                     const url = `/Books/avail-search?query=${encodeURIComponent(query)}&available=${available}`;
 
                     fetch(url)

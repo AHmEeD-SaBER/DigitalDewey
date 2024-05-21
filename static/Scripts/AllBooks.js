@@ -1,8 +1,8 @@
-// function displayNoBooksFound() {
-//   const container = document.getElementById("library-container");
-//   container.innerHTML =
-//     '<p class="nobooks">No books found that match your search criteria.</p>';
-// }
+function displayNoBooksFound() {
+  const container = document.getElementById("library-container");
+  container.innerHTML =
+    '<p class="nobooks">No books found that match your search criteria.</p>';
+}
 
 // function groupBooksByCategory(books) {
 //   if (!books || !Array.isArray(books)) {

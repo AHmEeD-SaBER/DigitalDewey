@@ -32,6 +32,7 @@ function checkIsLoggedIn() {
   }
   return false;
 }
+
 function checkIsAdmin() {
   const userDataJson = sessionStorage.getItem("LoggedInUser");
 

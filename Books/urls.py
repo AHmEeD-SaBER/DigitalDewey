@@ -7,4 +7,7 @@ urlpatterns = [
     path('delete/<int:id>/', views.delete, name='delete'),
     path('edit/<int:id>/', views.edit, name='edit'),
     path('add/', views.add, name='add'),
+    path('borrow/<int:id>/', views.borrow, name='borrow'),
+    path('borrowed/<int:id>/', views.borrowed, name='borrowed'),
+    path('return/<int:id>/', views.returnbook, name='return_book'),
 ]

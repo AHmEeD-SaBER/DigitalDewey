@@ -70,7 +70,7 @@
                     {% if book.section == section%}
                     <div class="Card" >
                         <div class="image">
-                            <a href="{% url 'page:Book_Details' book.id %}"><img src="{{ book.cover.url }}" width="180px" height="230px" name="{{book.title}}"  author = "{{book.author}}" category = "{{book.category}}" description = "{{book.description}}" availability = "{{book.available}}" price = "{{book.price}}"></a>
+                            <a href="{% url 'page:Book_Details' book.id %}"><img src="{{ book.cover.url }}" width="180px" height="230px" name="{{book.title}}"  author = "{{book.author}}" category = "{{book.category}}" section = "{{book.section}}" description = "{{book.description}}" availability = "{{book.available}}" price = "{{book.price}}"></a>
                         </div>
                     </div>
                     {% endif %}
