@@ -8,15 +8,15 @@ const bookDescription = sessionStorage.getItem("description");
 const bookSection = sessionStorage.getItem("section");
 const btn = document.getElementById("borrowButton");
 
-document.getElementById("name").textContent = bookName;
+// document.getElementById("name").textContent = bookName;
 document.getElementById("image").src = bookImageSrc;
-document.getElementById("price").textContent = bookPrice;
-document.getElementById("availability").textContent = bookAvailability;
-document.getElementById("category").textContent = " - " + bookCategory;
-document.getElementById("author").textContent = "Written By " + bookAuthor;
-document.getElementById("description").textContent = bookDescription;[]
+// document.getElementById("price").textContent = bookPrice;
+// document.getElementById("availability").textContent = bookAvailability;
+// document.getElementById("category").textContent = " - " + bookCategory;
+// document.getElementById("author").textContent = "Written By " + bookAuthor;
+// document.getElementById("description").textContent = bookDescription;[]
 document.getElementById("readButton").textContent = "Read Now!";
-document.getElementById("")
+// document.getElementById("")
 
 const ionicon = document.getElementById("ionicon");
 if (bookAvailability === "Available") {
@@ -32,9 +32,18 @@ document.body.style.backgroundImage = "url('" + bookImageSrc + "')";
 document.body.style.backgroundRepeat = "no-repeat";
 document.body.style.backgroundSize = "cover";
 
+let originalBookDetails = {};
 function editBookDetails() {
     const textContainer = document.getElementById("text-container");
-    textContainer.innerHTML = "";
+    originalBookDetails = {
+        name: document.getElementById('name').textContent,
+        author: document.getElementById('author').textContent,
+        category: document.getElementById('category').textContent,
+        price: document.getElementById('price').textContent,
+        availability: document.getElementById('availability').textContent,
+        description: document.getElementById('description').textContent,
+    };
+
 
     function capitalize(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
@@ -54,7 +63,7 @@ function editBookDetails() {
       );
       input.id = `${field}-input`;
       input.name = field;
-      input.value = sessionStorage.getItem(field);
+      input.value = originalBookDetails[field];
       form.appendChild(label);
       form.appendChild(input);
       form.appendChild(document.createElement("br"));
@@ -69,11 +78,11 @@ function editBookDetails() {
     cancelButton.onclick = () => window.location.reload();
     form.appendChild(saveButton);
     form.appendChild(cancelButton);
+    textContainer.innerHTML = "";
     textContainer.appendChild(form);
   
     document.getElementById("imageSrc-input").style.display = "none";
     document.getElementById("imageSrc-input-label").style.display = "none";
-    document.getElementById("editButton").disabled = true;
 }
 
 function isAdmin() {
@@ -224,21 +233,6 @@ function initializeLocalStorage(key) {
       localStorage.setItem(key, JSON.stringify([]));
     }
 }
-////////////////////////////////////////////////
-////////////////////////////////////////////////
-////////////////////////////////////////////////
-////////////////////////////////////////////////
-////////////////////////////////////////////////
-////////////////////////////////////////////////
-////////////////////////////////////////////////
-///////// implement return book ////////////////
-////////////////////////////////////////////////
-////////////////////////////////////////////////
-////////////////////////////////////////////////
-////////////////////////////////////////////////
-////////////////////////////////////////////////
-////////////////////////////////////////////////
-
 function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -339,8 +333,46 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(response => response.json())
         .then(data => {
             if (data.message) {
-                alert('Book updated successfully');
-                window.location.href = '/';
+                // alert('Book updated successfully');
+            // Update the original book details with the new values
+            originalBookDetails.name = document.getElementById('name-input').value;
+            originalBookDetails.author = document.getElementById('author-input').value;
+            originalBookDetails.category = document.getElementById('category-input').value;
+            originalBookDetails.price = document.getElementById('price-input').value;
+            originalBookDetails.availability = document.getElementById('availability-input').value;
+            originalBookDetails.description = document.getElementById('description-input').value;
+
+            // Update the book details on the page
+            document.getElementById("text-container").innerHTML = `
+                <h2 id="name" style="display: inline;">${originalBookDetails.name}</h2>
+                <h3 id="category" style="display: inline;"> - ${originalBookDetails.category}</h3>
+                <h4 id="author">${originalBookDetails.author}</h4>
+                <p id="description">${originalBookDetails.description}</p>
+                <br><br>
+                <ion-icon id="ionicon" class="CheckIcon"></ion-icon>
+                <span id="availability">${originalBookDetails.availability}</span>
+                <h3 id="price">${originalBookDetails.price}</h3>
+
+            `;
+            const ionicon = document.getElementById("ionicon");
+            if (originalBookDetails.availability === "Available") {
+            ionicon.setAttribute("name", "checkmark-circle-outline");
+            ionicon.classList.add("available");
+            } else {
+            ionicon.setAttribute("name", "close-circle-outline");
+            ionicon.classList.add("unavailable");
+            btn.textContent = "Request";
+            }
+
+
+            document.getElementById("text-container").offsetHeight;
+            document.getElementById("editButton").style.display = "flex";
+            if (editButton) {
+                editButton.addEventListener("click", function () {
+                    document.getElementById("editButton").style.display = "none";
+                    editBookDetails();
+                });
+            }
             } else {
                 console.error('Failed to update book: ', data.error);
                 alert('Failed to update book');

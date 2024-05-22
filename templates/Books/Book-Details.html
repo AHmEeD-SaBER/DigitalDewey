@@ -9,8 +9,7 @@
         <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
         <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
         <link rel="stylesheet" href="{% static 'Styles/Bookdetails.css'%}">
-        <script src="{% static 'Scripts/BD.js'%}" defer></script> 
-        <script src="{% static 'Scripts/ShowBookDetails.js'%}" defer></script>
+        <script src="{% static 'Scripts/BD.js'%}" defer></script> defer></script>
     </head>
     <body>
         <div class="wrap">
@@ -21,14 +20,16 @@
                 <button class="readButton" id="returnButton" type="button">Return</button>
             </div>
             <div class="text-box" id="text-container">
-                <h2 id="name" style="display: inline;"></h2>
-                <h3 id="category" style="display: inline;"></h3>
-                <h4 id="author"></h4>
-                <p id="description"></p>
+                <h2 id="name" style="display: inline;">{{ book.title }}</h2>
+                <h3 id="category" style="display: inline;"> - {{ book.category }}</h3>
+                <h4 id="author">{{ book.author }}</h4>
+                <p id="description">{{ book.description }}</p>
+
                 <br><br>
                 <ion-icon id="ionicon" class="CheckIcon"></ion-icon>
-                <span id="availability"></span>
-                <h3 id="price"></h3>
+                <span id="availability">{{ book.available }}</span>
+                <h3 id="price">{{ book.price }}</h3>
+
             </div>
             <div class="buttons">
                 <button class="btn1" id="editButton" type="button">Edit Book</button>

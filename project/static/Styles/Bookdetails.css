@@ -56,7 +56,9 @@ body::after {
 
 .text-box p {
   font-size: 16px;
+  max-width: 300px;
 }
+
 
 .text-box h2 {
   margin: 0 auto;
