@@ -54,19 +54,24 @@ function editBookDetails() {
     form.id = "editForm";
   
     fields.forEach((field) => {
-      const label = document.createElement("label");
-      label.htmlFor = `${field}-input`;
-      label.textContent = `${capitalize(field)}: `;
-      label.id = `${field}-input-label`;
-      const input = document.createElement(
+        const label = document.createElement("label");
+        label.htmlFor = `${field}-input`;
+        label.textContent = `${capitalize(field)}: `;
+        label.id = `${field}-input-label`;
+        const input = document.createElement(
         field === "description" ? "textarea" : "input"
-      );
-      input.id = `${field}-input`;
-      input.name = field;
-      input.value = originalBookDetails[field];
-      form.appendChild(label);
-      form.appendChild(input);
-      form.appendChild(document.createElement("br"));
+        );
+        input.id = `${field}-input`;
+        input.name = field;
+        let value = originalBookDetails[field];
+        if (value && value[1] === '-') {
+            console.log(value);
+            value = value.substring(3);
+        }
+        input.value = value;
+        form.appendChild(label);
+        form.appendChild(input);
+        form.appendChild(document.createElement("br"));
     });
   
     const saveButton = document.getElementById("saveButton");

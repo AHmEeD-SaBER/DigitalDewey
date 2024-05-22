@@ -25,9 +25,6 @@
                     <li  id="addBook"><a href="{% url 'page:AddBook' %}">Add New Book</a></li>
                     <li><a href="{%url 'page:AllBooks'%}">All Books</a></li>
                     <li><a href="{% url 'page:About'%}">About</a></li>
-                    {% if user.is_authenticated %}
-                    <li><a href="{%url 'authentication:Logout'%}">Logout</a></li>
-                    {%endif%}
                 </ul>
             </nav>
         </header>
