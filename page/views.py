@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from Books.models import Book
+from Books.models import Book , BorrowedBook
 from django.core import serializers
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -7,6 +7,7 @@ from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login
 import json
+from django.contrib.auth.decorators import login_required
 
 def index(request):
     books = Book.objects.all()
@@ -22,11 +23,19 @@ def index(request):
             return redirect('page:index')
     return render(request, 'HTML/index.html', {'books': books , 'sections':sections})
 
+@login_required
+def Profile(request):
+    borrowed_books = BorrowedBook.objects.filter(borrower=request.user)
+    borrowed_books_count = borrowed_books.count()
+    
+    context = {
+        'borrowed_books': borrowed_books,
+        'borrowed_books_count': borrowed_books_count,
+    }
+    return render(request, 'HTML/Profile.html', context)
+
 def About(request):
     return render(request, 'HTML/About.html' )
-
-def Profile(request):
-    return render(request, 'HTML/Profile.html' )
 
 def AddBook(request):
     return render(request, 'HTML/AddBook.html' )

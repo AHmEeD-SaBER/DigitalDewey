@@ -33,6 +33,7 @@ document.body.style.backgroundRepeat = "no-repeat";
 document.body.style.backgroundSize = "cover";
 
 let originalBookDetails = {};
+
 function editBookDetails() {
     const textContainer = document.getElementById("text-container");
     originalBookDetails = {
@@ -43,7 +44,6 @@ function editBookDetails() {
         availability: document.getElementById('availability').textContent,
         description: document.getElementById('description').textContent,
     };
-
 
     function capitalize(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
@@ -75,7 +75,6 @@ function editBookDetails() {
     });
   
     const saveButton = document.getElementById("saveButton");
-  //   saveButton.onclick = saveBookDetails;
     saveButton.style.display = "flex";
   
     const cancelButton = document.getElementById("cancelButton");
@@ -298,6 +297,11 @@ function borrowBook() {
     .catch(error => console.error('Error borrowing book:', error));
 }
 
+document.getElementById("editButton").addEventListener("click", function () {
+    document.getElementById("editButton").style.display = "none";
+    editBookDetails(); 
+    });
+
 document.addEventListener('DOMContentLoaded', function() {
     initializeLocalStorage('RequestedBooks');
     initializeLocalStorage('ReadBooks');
@@ -305,14 +309,6 @@ document.addEventListener('DOMContentLoaded', function() {
     addBook(bookName, bookPrice, bookImageSrc, bookAuthor, bookCategory, bookAvailability, bookDescription, "LastSeenBooks");
     
     isLoggedIn()
-
-    const editButton = document.getElementById("editButton");
-    if (editButton) {
-        editButton.addEventListener("click", function () {
-        document.getElementById("editButton").style.display = "none";
-        editBookDetails();
-        });
-    }
 
     const urlParts = window.location.pathname.split('/');
     const bookId = urlParts[urlParts.length - 2];
@@ -356,9 +352,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <br><br>
                 <ion-icon id="ionicon" class="CheckIcon"></ion-icon>
                 <span id="availability">${originalBookDetails.availability}</span>
-                <h3 id="price">${originalBookDetails.price}</h3>
-
-            `;
+                <h3 id="price">${originalBookDetails.price}</h3>`;
             const ionicon = document.getElementById("ionicon");
             if (originalBookDetails.availability === "Available") {
             ionicon.setAttribute("name", "checkmark-circle-outline");
@@ -369,14 +363,13 @@ document.addEventListener('DOMContentLoaded', function() {
             btn.textContent = "Request";
             }
 
-
             document.getElementById("text-container").offsetHeight;
             document.getElementById("editButton").style.display = "flex";
             if (editButton) {
-                editButton.addEventListener("click", function () {
-                    document.getElementById("editButton").style.display = "none";
-                    editBookDetails();
-                });
+                // editButton.addEventListener("click", function () {
+                //     // document.getElementById("editButton").style.display = "none";
+                //     editBookDetails();
+                // });
             }
             } else {
                 console.error('Failed to update book: ', data.error);
@@ -387,6 +380,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     document.getElementById('delButton').addEventListener('click', function() {
+        // editBookDetails()
         fetch(`/Books/delete/${bookId}/`, {
             method: 'POST',
             headers: {

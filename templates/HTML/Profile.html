@@ -12,6 +12,7 @@
         <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
         <script src="{% static 'Scripts/Profile.js' %}" defer></script>
         <script src="{% static 'Scripts/ShowBookDetails.js' %}" defer></script>
+        <script src="{% static 'Script/BD.js' %}" defer></script>
     </head>
 
     <body>
@@ -21,12 +22,10 @@
                     <img src="{% static 'Imgs/user-profile.png'%}" alt="" class="profileImage">
                 </div>
                 <div class="about">
-                    <span id="usernameText">Username: someone@somthing.com</span>
-                    <span id="emailText">Email:    *************</span>
-                    <span id="roleText">Role:     *************</span>
-                    <span id="passwordText">Password: *************</span>
-                    <!-- <span>Region: SomeCountry</span>
-                    <span>ID: 12345</span> -->
+                    <span id="usernameText">Username: {{ user.username }}</span>
+                    <span id="emailText">Email: {{ user.email }}</span>
+                    <span id="roleText">Admin: {{ user.is_staff }}</span>
+                    <span id="passwordText">Password: ************* </span>
                 </div>
                 <div class="buttons">
                     <button id="editProfileButton">Edit User Profile</button>
@@ -45,7 +44,7 @@
                     <div class="box box1">
                         <ion-icon name="book-outline"></ion-icon>
                         <span class="text">Borrowed Books</span>
-                        <span class="number" id="borrowNum">0</span>
+                        <span class="number" id="borrowNum">{{ borrowed_books_count }}</span>
                     </div>
                     <div class="box box2">
                         <ion-icon name="library-outline"></ion-icon>
@@ -64,15 +63,34 @@
                         <ion-icon name="book-outline"></ion-icon>
                         <h2 class="text">Borrowed Books</h2>
                     </div>
-
+                    <hr>
+                    <div class="borrowed-books">
+                        {% for book in borrowed_books %}
+                        <div class="card">
+                            <div class="bookCover">
+                                <a href="{% url 'page:Book_Details' book.book.id %}"><img src="{{ book.book.cover.url }}" width="180px" height="230px" name="{{book.book.title}}"  author = "{{book.book.author}}" category = "{{book.book.category}}" section = "{{book.book.section}}" description = "{{book.book.description}}" availability = "{{book.book.available}}" price = "{{book.book.price}}"></a>
+                            </div>
+                            <div class="details">
+                                <p class="detailsPtag">Title : {{book.book.title}}</p>
+                                <p class="detailsPtag">Author : {{book.book.author}}</p>
+                                <p class="detailsPtag">Category : {{book.book.category}}</p>
+                                <p class="detailsPtag">Description : {{book.book.description}}</p>
+                                <p class="detailsPtag">Availability : {{book.book.available}}</p>
+                                <p class="detailsPtag">Price : {{book.book.price}}</p>
+                            </div>
+                        </div>
+                        {% empty %}
+                            <p class="detailsPtag">Borrow Some Books First Lad.</p>
+                        {% endfor %}
+                    </div>
+                    <hr>
                 </div>
-
                 <div class="activity" id="lastContainer">
                     <div class="title">
                         <ion-icon name="time-outline"></ion-icon>
                         <h2 class="text">Last Seen</h2>
                     </div>
-                </div>
+                </div>  
             </div>
         </div>
     </body>

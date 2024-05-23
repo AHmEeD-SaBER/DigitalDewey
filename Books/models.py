@@ -21,3 +21,14 @@ class BorrowedBook(models.Model):
 
     def __str__(self):
         return f'{self.book.title} borrowed by {self.borrower.username}'
+    
+# class LastVisitedBook(models.Model):
+#     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='last_visited_books')
+#     book = models.ForeignKey(Book, on_delete=models.CASCADE)
+#     visited_at = models.DateTimeField(auto_now_add=True)
+
+#     class Meta:
+#         ordering = ['-visited_at']
+
+#     def __str__(self):
+#         return f'{self.book.title} visited by {self.user.username}'
