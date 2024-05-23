@@ -14,7 +14,6 @@ body {
 .wraper {
   background-color: #000000;
   padding-top: 80px;
-  height: 100%;
   display: flex;
   justify-content: space-between;
 }
@@ -95,7 +94,6 @@ body {
 
 .dashboard {
   width: calc(100% - 350px);
-  height: 100%;
   margin-left: 50px;
   .title {
     display: flex;
@@ -165,21 +163,42 @@ body {
   .boxes .box3 {
     background-color: rgb(254, 89, 224);
   }
-
-  .Card {
-    display: flex;
-    justify-content: left;
+  .borrowed-books{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     gap: 20px;
-    margin: 20px;
-    img {
-      height: 250px;
-      width: 180px;
+    padding: 40px;
+  }
+  .bookCover {
+    background-color: rgba(255, 255, 255, 0.208);
+    padding: 15px 15px 5px 15px;
+    margin-bottom: 20px;
+    border-radius: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    align-items: center;
+    text-align: center;
+    transition: 0.3s;
+    h3{
       transition: 0.3s;
     }
-    img:hover {
-      filter: brightness(40%);
+    img {
+      height: 220px;
+      width: 180px;
+      transition: 0.3s;
+      margin-bottom: 20px;
     }
   }
+  .bookCover:hover {
+    background-color:rgba(255, 255, 255, 0.4) ;
+    h3{
+      color: aqua;
+    }
+    img {
+      transform: scale(1.1);
+      border-radius: 10px;
+    }
+  }
+
 }
 
 @media only screen and (max-width: 650px) {

@@ -66,19 +66,12 @@
                     <hr>
                     <div class="borrowed-books">
                         {% for book in borrowed_books %}
-                        <div class="card">
                             <div class="bookCover">
                                 <a href="{% url 'page:Book_Details' book.book.id %}"><img src="{{ book.book.cover.url }}" width="180px" height="230px" name="{{book.book.title}}"  author = "{{book.book.author}}" category = "{{book.book.category}}" section = "{{book.book.section}}" description = "{{book.book.description}}" availability = "{{book.book.available}}" price = "{{book.book.price}}"></a>
+                                <h3 class="book-name">{{book.book.title}}</h3>
+                                <p class="book-author">{{book.book.author}}</p>
                             </div>
-                            <div class="details">
-                                <p class="detailsPtag">Title : {{book.book.title}}</p>
-                                <p class="detailsPtag">Author : {{book.book.author}}</p>
-                                <p class="detailsPtag">Category : {{book.book.category}}</p>
-                                <p class="detailsPtag">Description : {{book.book.description}}</p>
-                                <p class="detailsPtag">Availability : {{book.book.available}}</p>
-                                <p class="detailsPtag">Price : {{book.book.price}}</p>
-                            </div>
-                        </div>
+
                         {% empty %}
                             <p class="detailsPtag">Borrow Some Books First Lad.</p>
                         {% endfor %}
