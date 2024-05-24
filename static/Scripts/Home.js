@@ -28,6 +28,7 @@ async function isLoggedIn() {
 }
 
 function scrollToElement(elementId) {
+    event.preventDefault()
     const element = document.getElementById(elementId);
     if (element) {
         setTimeout(() => {
@@ -39,6 +40,7 @@ function scrollToElement(elementId) {
         }, 0);
     }
 }
+
 function hoverEffect() {
     var Cards = document.querySelectorAll('.Card');
 

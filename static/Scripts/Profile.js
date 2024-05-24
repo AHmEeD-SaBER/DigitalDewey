@@ -100,10 +100,6 @@ function displayLastSeen(books) {
   }
 }
 
-// function getUserData() {
-  
-// }
-
 document.addEventListener("DOMContentLoaded", function () {
     const borrowedBooksCount = document.getElementById('borrowNum').innerHTML;
 
@@ -117,11 +113,13 @@ document.addEventListener("DOMContentLoaded", function () {
     const readBooks = loadBooksFromLocalStorage("ReadBooks");
     document.getElementById("readNum").textContent = readBooks.length;
 
+    const requestedBooks = loadBooksFromLocalStorage("ReadBooks").length;
+
     const pointsPerReadBook = 2.5;
     const pointsPerBorrowedBook = 3.5;
     const recentActivityBonus = latestBooks.length * 0.5;
-//   const requestedBooksBonus = 1.5
+    const requestedBooksBonus = 1.5
 
-    const rp = 5 * ((readBooks.length * pointsPerReadBook) + (borrowedBooksCount * pointsPerBorrowedBook) + recentActivityBonus);
+    const rp = 5 * ((readBooks.length * pointsPerReadBook) + (borrowedBooksCount * pointsPerBorrowedBook) + recentActivityBonus + (requestedBooks * requestedBooksBonus));
     document.getElementById("rewardPoints").textContent = rp;
 });

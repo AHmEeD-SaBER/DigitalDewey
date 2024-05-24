@@ -39,6 +39,7 @@ function scrollToElement(elementId) {
         }, 0);
     }
 }
+
 function hoverEffect() {
     var Cards = document.querySelectorAll('.Card');
 
