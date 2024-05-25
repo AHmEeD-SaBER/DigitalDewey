@@ -8,15 +8,8 @@ const bookDescription = sessionStorage.getItem("description");
 const bookSection = sessionStorage.getItem("section");
 const btn = document.getElementById("borrowButton");
 
-// document.getElementById("name").textContent = bookName;
 document.getElementById("image").src = bookImageSrc;
-// document.getElementById("price").textContent = bookPrice;
-// document.getElementById("availability").textContent = bookAvailability;
-// document.getElementById("category").textContent = " - " + bookCategory;
-// document.getElementById("author").textContent = "Written By " + bookAuthor;
-// document.getElementById("description").textContent = bookDescription;[]
 document.getElementById("readButton").textContent = "Read Now!";
-// document.getElementById("")
 
 const ionicon = document.getElementById("ionicon");
 if (bookAvailability === "Available") {
@@ -33,61 +26,6 @@ document.body.style.backgroundRepeat = "no-repeat";
 document.body.style.backgroundSize = "cover";
 
 let originalBookDetails = {};
-
-function editBookDetails() {
-    const textContainer = document.getElementById("text-container");
-    originalBookDetails = {
-        name: document.getElementById('name').textContent,
-        author: document.getElementById('author').textContent,
-        category: document.getElementById('category').textContent,
-        price: document.getElementById('price').textContent,
-        availability: document.getElementById('availability').textContent,
-        description: document.getElementById('description').textContent,
-    };
-
-    function capitalize(string) {
-        return string.charAt(0).toUpperCase() + string.slice(1);
-    }
-
-    const fields = ["name","author","category","price","availability","description","section","imageSrc",];
-    const form = document.createElement("form");
-    form.id = "editForm";
-  
-    fields.forEach((field) => {
-        const label = document.createElement("label");
-        label.htmlFor = `${field}-input`;
-        label.textContent = `${capitalize(field)}: `;
-        label.id = `${field}-input-label`;
-        const input = document.createElement(
-        field === "description" ? "textarea" : "input"
-        );
-        input.id = `${field}-input`;
-        input.name = field;
-        let value = originalBookDetails[field];
-        if (value && value[1] === '-') {
-            console.log(value);
-            value = value.substring(3);
-        }
-        input.value = value;
-        form.appendChild(label);
-        form.appendChild(input);
-        form.appendChild(document.createElement("br"));
-    });
-  
-    const saveButton = document.getElementById("saveButton");
-    saveButton.style.display = "flex";
-  
-    const cancelButton = document.getElementById("cancelButton");
-    cancelButton.style.display = "flex";
-    cancelButton.onclick = () => window.location.reload();
-    form.appendChild(saveButton);
-    form.appendChild(cancelButton);
-    textContainer.innerHTML = "";
-    textContainer.appendChild(form);
-  
-    document.getElementById("imageSrc-input").style.display = "none";
-    document.getElementById("imageSrc-input-label").style.display = "none";
-}
 
 function isAdmin() {
     fetch('/auth/api/user/')
@@ -156,63 +94,6 @@ function checkIfBorrowed() {
         });
 }
 
-document.getElementById("borrowButton").addEventListener("click", async function () {
-    try {
-        const response = await fetch('/auth/api/loggedin/');
-        const data = await response.json();
-        const urlParts = window.location.pathname.split('/');
-        const bookId = urlParts[urlParts.length - 2];
-
-        if (data.is_logged_in) {
-            if (bookAvailability === 'Available') {
-                borrowBook();
-                isBorrowed = true;
-              } else {
-                addBook(bookName,bookId,bookPrice, bookImageSrc, bookAuthor, bookCategory, bookAvailability, bookDescription, "RequestedBooks");
-                alert("Book Has Been Added To Requested Books List");
-                isBorrowed = false;
-              }
-        } else {
-            alert('Please Login First!');
-            window.location.href = '/auth/login/';
-            return;
-        }
-    } catch (error) {
-        console.error('Error checking login status:', error);
-        return false;
-    } 
-});
-
-document.getElementById("readButton").addEventListener("click", async function () {
-    try {
-        const response = await fetch('/auth/api/loggedin/');
-        const data = await response.json();
-        const urlParts = window.location.pathname.split('/');
-        const bookId = urlParts[urlParts.length - 2];
-        if (data.is_logged_in) {
-            addBook(
-                bookName,
-                bookId,
-                bookPrice,
-                bookImageSrc,
-                bookAuthor,
-                bookCategory,
-                bookAvailability,
-                bookDescription,
-                "ReadBooks"
-              );
-            alert("Book Added To Read List But No Book Reading Functionality Yet!! SRY");
-        } else {
-            alert('Please Login First!');
-            window.location.href = '/auth/login/';
-            return;
-        }
-    } catch (error) {
-        console.error('Error checking login status:', error);
-        return false;
-    }
-});
-
 function addBook(name,id ,price,imageSrc,author,category,availability,description,localStorageName) {
     let Books = loadFromLocalStorage(localStorageName);
 
@@ -241,6 +122,7 @@ function initializeLocalStorage(key) {
       localStorage.setItem(key, JSON.stringify([]));
     }
 }
+
 function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -255,31 +137,6 @@ function getCookie(name) {
     }
     return cookieValue;
 }
-
-document.getElementById("returnButton").addEventListener("click", function(){
-    const urlParts = window.location.pathname.split('/');
-    const bookId = urlParts[urlParts.length - 2];
-    fetch(`/Books/return/${bookId}/`, {
-        method: 'POST',
-        headers: {
-            'X-CSRFToken': getCookie('csrftoken'),
-            'Content-Type': 'application/json'
-        },
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.status === 'success') {
-            alert(data.message);
-            window.location.href = `/Book_Details/${bookId}/`;
-        } else {
-            alert(data.message);
-        }
-    })
-    .catch(error => {
-        console.error('Error returning the book:', error);
-        alert('An error occurred while trying to return the book.');
-    });
-});
 
 function borrowBook() {
     const urlParts = window.location.pathname.split('/');
@@ -301,10 +158,60 @@ function borrowBook() {
     .catch(error => console.error('Error borrowing book:', error));
 }
 
-document.getElementById("editButton").addEventListener("click", function () {
-    document.getElementById("editButton").style.display = "none";
-    editBookDetails(); 
-    });
+function editBookForm() {
+    const textContainer = document.getElementById("text-container");
+        originalBookDetails = {
+            name: document.getElementById('name').textContent,
+            author: document.getElementById('author').textContent,
+            category: document.getElementById('category').textContent,
+            price: document.getElementById('price').textContent,
+            availability: document.getElementById('availability').textContent,
+            description: document.getElementById('description').textContent,
+        };
+
+        function capitalize(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+
+        const fields = ["name","author","category","price","availability","description","section","imageSrc",];
+        const form = document.createElement("form");
+        form.id = "editForm";
+    
+        fields.forEach((field) => {
+            const label = document.createElement("label");
+            label.htmlFor = `${field}-input`;
+            label.textContent = `${capitalize(field)}: `;
+            label.id = `${field}-input-label`;
+            const input = document.createElement(
+            field === "description" ? "textarea" : "input"
+            );
+            input.id = `${field}-input`;
+            input.name = field;
+            let value = originalBookDetails[field];
+            if (value && value[1] === '-') {
+                console.log(value);
+                value = value.substring(3);
+            }
+            input.value = value;
+            form.appendChild(label);
+            form.appendChild(input);
+            form.appendChild(document.createElement("br"));
+        });
+    
+        const saveButton = document.getElementById("saveButton");
+        saveButton.style.display = "flex";
+    
+        const cancelButton = document.getElementById("cancelButton");
+        cancelButton.style.display = "flex";
+        cancelButton.onclick = () => window.location.reload();
+        form.appendChild(saveButton);
+        form.appendChild(cancelButton);
+        textContainer.innerHTML = "";
+        textContainer.appendChild(form);
+    
+        document.getElementById("imageSrc-input").style.display = "none";
+        document.getElementById("imageSrc-input-label").style.display = "none";
+}
 
 document.addEventListener('DOMContentLoaded', function() {
     initializeLocalStorage('RequestedBooks');
@@ -317,8 +224,89 @@ document.addEventListener('DOMContentLoaded', function() {
     addBook(bookName, bookId, bookPrice, bookImageSrc, bookAuthor, bookCategory, bookAvailability, bookDescription, "LastSeenBooks");
     
     isLoggedIn()
-
     checkIfBorrowed();
+        
+    document.getElementById("borrowButton").addEventListener("click", async function () {
+        try {
+            const response = await fetch('/auth/api/loggedin/');
+            const data = await response.json();
+            const urlParts = window.location.pathname.split('/');
+            const bookId = urlParts[urlParts.length - 2];
+    
+            if (data.is_logged_in) {
+                if (bookAvailability === 'Available') {
+                    borrowBook();
+                    isBorrowed = true;
+                  } else {
+                    addBook(bookName,bookId,bookPrice, bookImageSrc, bookAuthor, bookCategory, bookAvailability, bookDescription, "RequestedBooks");
+                    alert("Book Has Been Added To Requested Books List");
+                    isBorrowed = false;
+                  }
+            } else {
+                alert('Please Login First!');
+                window.location.href = '/auth/login/';
+                return;
+            }
+        } catch (error) {
+            console.error('Error checking login status:', error);
+            return false;
+        } 
+    });
+
+    document.getElementById("returnButton").addEventListener("click", function(){
+        const urlParts = window.location.pathname.split('/');
+        const bookId = urlParts[urlParts.length - 2];
+        fetch(`/Books/return/${bookId}/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken'),
+                'Content-Type': 'application/json'
+            },
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                alert(data.message);
+                window.location.href = `/Book_Details/${bookId}/`;
+            } else {
+                alert(data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error returning the book:', error);
+            alert('An error occurred while trying to return the book.');
+        });
+    });
+    
+    document.getElementById("readButton").addEventListener("click", async function () {
+        try {
+            const response = await fetch('/auth/api/loggedin/');
+            const data = await response.json();
+            const urlParts = window.location.pathname.split('/');
+            const bookId = urlParts[urlParts.length - 2];
+            if (data.is_logged_in) {
+                addBook(
+                    bookName,
+                    bookId,
+                    bookPrice,
+                    bookImageSrc,
+                    bookAuthor,
+                    bookCategory,
+                    bookAvailability,
+                    bookDescription,
+                    "ReadBooks"
+                  );
+                alert("Book Added To Read List But No Book Reading Functionality Yet!! SRY");
+            } else {
+                alert('Please Login First!');
+                window.location.href = '/auth/login/';
+                return;
+            }
+        } catch (error) {
+            console.error('Error checking login status:', error);
+            return false;
+        }
+    });
 
     document.getElementById('saveButton').addEventListener('click', function() {    
         const formData = new FormData();
@@ -346,7 +334,7 @@ document.addEventListener('DOMContentLoaded', function() {
             originalBookDetails.price = document.getElementById('price-input').value;
             originalBookDetails.availability = document.getElementById('availability-input').value;
             originalBookDetails.description = document.getElementById('description-input').value;
-
+    
             document.getElementById("text-container").innerHTML = `
                 <h2 id="name" style="display: inline;">${originalBookDetails.name}</h2>
                 <h3 id="category" style="display: inline;"> - ${originalBookDetails.category}</h3>
@@ -365,15 +353,10 @@ document.addEventListener('DOMContentLoaded', function() {
             ionicon.classList.add("unavailable");
             btn.textContent = "Request";
             }
-
+    
             document.getElementById("text-container").offsetHeight;
             document.getElementById("editButton").style.display = "flex";
-            if (editButton) {
-                editButton.addEventListener("click", function () {
-                    document.getElementById("editButton").style.display = "none";
-                    editBookDetails();
-                });
-            }
+            
             } else {
                 console.error('Failed to update book: ', data.error);
                 alert('Failed to update book');
@@ -401,6 +384,4 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .catch(error => console.error('Error:', error));
     });
-
-    
 });
