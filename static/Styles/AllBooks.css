@@ -168,13 +168,13 @@ body {
 }
 
 .available-false {
-  color: rgb(213, 22, 22);
+  color: rgb(255, 0, 0);
   font-size: 13px;
   font-weight: 700;
 }
 
 .available-true {
-  color: #148a2f;
+  color: #0bd238;
   font-size: 13px;
   font-weight: 700;
 }
