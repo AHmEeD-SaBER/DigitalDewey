@@ -31,6 +31,7 @@ body {
 
 .details {
   padding-top: 10px;
+  max-width: 300px;
 }
 .detailsPtag {
   padding: 5px;
@@ -169,12 +170,14 @@ body {
     gap: 20px;
     padding: 40px;
   }
+  .lastCover{
+    height: 260px;
+    margin-top: 30px;
+  }
   .bookCover {
-    background-color: rgba(255, 255, 255, 0.208);
     padding: 15px 15px 5px 15px;
     margin-bottom: 20px;
     border-radius: 20px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     align-items: center;
     text-align: center;
     transition: 0.3s;
@@ -199,6 +202,17 @@ body {
     }
   }
 
+}
+.Card {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  flex-direction: row;
+  padding: 20px;
+  gap: 20px;
+  background-color: rgba(255, 255, 255, 0.208);
+  margin: 20px;
+  border-radius: 30px;
 }
 
 @media only screen and (max-width: 650px) {
