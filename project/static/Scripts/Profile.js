@@ -39,6 +39,7 @@ function displayLastSeen(books) {
 
     const cardLink = document.createElement("a");
     cardLink.setAttribute("href", `/Book_Details/${book.id}/`);
+    console.log(book.id);
 
     const cardImg = document.createElement("img");
     cardImg.alt = `Cover of ${book.name}`;

@@ -168,7 +168,7 @@ document.getElementById("borrowButton").addEventListener("click", async function
                 borrowBook();
                 isBorrowed = true;
               } else {
-                addBook(bookName, bookPrice, bookImageSrc, bookAuthor, bookCategory, bookAvailability, bookDescription, "RequestedBooks");
+                addBook(bookName,bookId,bookPrice, bookImageSrc, bookAuthor, bookCategory, bookAvailability, bookDescription, "RequestedBooks");
                 alert("Book Has Been Added To Requested Books List");
                 isBorrowed = false;
               }
@@ -187,9 +187,12 @@ document.getElementById("readButton").addEventListener("click", async function (
     try {
         const response = await fetch('/auth/api/loggedin/');
         const data = await response.json();
+        const urlParts = window.location.pathname.split('/');
+        const bookId = urlParts[urlParts.length - 2];
         if (data.is_logged_in) {
             addBook(
                 bookName,
+                bookId,
                 bookPrice,
                 bookImageSrc,
                 bookAuthor,
@@ -198,7 +201,6 @@ document.getElementById("readButton").addEventListener("click", async function (
                 bookDescription,
                 "ReadBooks"
               );
-            // rmvDupesInLocalStorage("ReadBooks");
             alert("Book Added To Read List But No Book Reading Functionality Yet!! SRY");
         } else {
             alert('Please Login First!');
@@ -211,7 +213,7 @@ document.getElementById("readButton").addEventListener("click", async function (
     }
 });
 
-function addBook(name,price,imageSrc,author,category,availability,description,localStorageName) {
+function addBook(name,id ,price,imageSrc,author,category,availability,description,localStorageName) {
     let Books = loadFromLocalStorage(localStorageName);
 
     const existingBookIndex = Books.findIndex((book) => book.name === name);
@@ -219,8 +221,6 @@ function addBook(name,price,imageSrc,author,category,availability,description,lo
         Books.splice(existingBookIndex, 1);
     }
 
-    let urlParts = window.location.pathname.split('/');
-    let id = urlParts[urlParts.length - 2];
     let book = {
         id: id,
         name: name,
@@ -310,12 +310,14 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeLocalStorage('RequestedBooks');
     initializeLocalStorage('ReadBooks');
     initializeLocalStorage('LastSeenBooks');
-    addBook(bookName, bookPrice, bookImageSrc, bookAuthor, bookCategory, bookAvailability, bookDescription, "LastSeenBooks");
-    
-    isLoggedIn()
 
     const urlParts = window.location.pathname.split('/');
     const bookId = urlParts[urlParts.length - 2];
+
+    addBook(bookName, bookId, bookPrice, bookImageSrc, bookAuthor, bookCategory, bookAvailability, bookDescription, "LastSeenBooks");
+    
+    isLoggedIn()
+
     checkIfBorrowed();
 
     document.getElementById('saveButton').addEventListener('click', function() {    
@@ -338,8 +340,6 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(response => response.json())
         .then(data => {
             if (data.message) {
-                // alert('Book updated successfully');
-            // Update the original book details with the new values
             originalBookDetails.name = document.getElementById('name-input').value;
             originalBookDetails.author = document.getElementById('author-input').value;
             originalBookDetails.category = document.getElementById('category-input').value;
@@ -347,7 +347,6 @@ document.addEventListener('DOMContentLoaded', function() {
             originalBookDetails.availability = document.getElementById('availability-input').value;
             originalBookDetails.description = document.getElementById('description-input').value;
 
-            // Update the book details on the page
             document.getElementById("text-container").innerHTML = `
                 <h2 id="name" style="display: inline;">${originalBookDetails.name}</h2>
                 <h3 id="category" style="display: inline;"> - ${originalBookDetails.category}</h3>
@@ -370,10 +369,10 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById("text-container").offsetHeight;
             document.getElementById("editButton").style.display = "flex";
             if (editButton) {
-                // editButton.addEventListener("click", function () {
-                //     // document.getElementById("editButton").style.display = "none";
-                //     editBookDetails();
-                // });
+                editButton.addEventListener("click", function () {
+                    document.getElementById("editButton").style.display = "none";
+                    editBookDetails();
+                });
             }
             } else {
                 console.error('Failed to update book: ', data.error);
@@ -384,7 +383,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     document.getElementById('delButton').addEventListener('click', function() {
-        // editBookDetails()
         fetch(`/Books/delete/${bookId}/`, {
             method: 'POST',
             headers: {

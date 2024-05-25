@@ -76,7 +76,7 @@ function scrollToElement(elementId) {
         setTimeout(() => {
             const elementPos = element.getBoundingClientRect().top;
             window.scrollBy({
-                top: elementPos - 120,
+                top: elementPos - 210,
                 behavior: 'smooth'
             });
         }, 0);
@@ -108,5 +108,4 @@ document.addEventListener('DOMContentLoaded', function() {
 
     searchInput.addEventListener('input', fetchBooks);
     availableCheckbox.addEventListener('change', fetchBooks);
-    scrollToHash();
 });
