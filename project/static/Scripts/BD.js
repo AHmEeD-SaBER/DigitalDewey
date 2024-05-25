@@ -218,7 +218,11 @@ function addBook(name,price,imageSrc,author,category,availability,description,lo
     if (existingBookIndex !== -1) {
         Books.splice(existingBookIndex, 1);
     }
+
+    let urlParts = window.location.pathname.split('/');
+    let id = urlParts[urlParts.length - 2];
     let book = {
+        id: id,
         name: name,
         price: price,
         imageSrc: imageSrc,

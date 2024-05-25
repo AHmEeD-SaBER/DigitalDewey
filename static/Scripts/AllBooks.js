@@ -96,11 +96,10 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(data => {
                 if(data === '[]'){
                     document.getElementById('library-container').innerHTML ='<p class="nobooks">No books found that match your search criteria.</p>';
-                }else if(available === false && query === ''){
+                } else if(available === false && query === ''){
                     document.getElementById('library-container').innerHTML = originalContent;
-
                 }
-                 else {
+                else {
                     updatePage(data);
                 }
             })

@@ -35,9 +35,10 @@ function displayLastSeen(books) {
 
     const bookCoverContainer = document.createElement("div");
     bookCoverContainer.classList.add("bookCover");
+    bookCoverContainer.classList.add("lastCover");
 
     const cardLink = document.createElement("a");
-    cardLink.setAttribute("href", `/Book_Details/256/`);
+    cardLink.setAttribute("href", `/Book_Details/${book.id}/`);
 
     const cardImg = document.createElement("img");
     cardImg.alt = `Cover of ${book.name}`;
